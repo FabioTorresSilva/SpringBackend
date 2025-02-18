@@ -123,8 +123,38 @@ public class ClientService implements IClientService {
      * @return A list of {@link FountainDto} objects representing the client's favorite fountains.
      */
     @Override
-    public List<FountainDto> GetClientFavourites(int id) {
+    public List<FountainDto> getClientFavourites(int id) {
         Client client = getClientById(id);
-        return client.getFavourites(); 
+        return client.getFavourites();
+    }
+
+    /**
+     * Adds a fountain to the client's list of favorite fountains.
+     * This method verifies that the provided fountain exists and adds it to the client's
+     * favorites list. If the fountain does not exist, it throws a {@link ParamException}.
+     * If the client with the provided ID does not exist, it throws a {@link UserNotFoundException}.
+     *
+     * @param id The unique identifier of the client.
+     * @param fountainDto The {@link FountainDto} object representing the fountain to be added to the client's favorites.
+     * @return The {@link FountainDto} object that was added to the favorites list.
+     * @throws ParamException If the fountain does not exist (i.e., is null).
+     * @throws UserNotFoundException If the client with the provided ID is not found.
+     */
+    @Override
+    public FountainDto addFavourite(int id, FountainDto fountainDto) {
+
+        if(fountainDto == null)
+            throw new ParamException("Fountain does not exist");
+
+        Optional<Client> client = clientRepository.findById(id);
+
+        if (client.isEmpty()) {
+            throw new UserNotFoundException("Client with ID " + id + " not found.");
+        }
+
+        Client clt = client.get();
+        clt.favourites.add(fountainDto);
+
+        return fountainDto;
     }
 }

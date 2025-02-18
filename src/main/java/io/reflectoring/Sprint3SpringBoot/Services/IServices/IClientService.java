@@ -52,5 +52,14 @@ public interface IClientService {
      * @param id The unique identifier of the client whose favorites are being requested.
      * @return A list of {@link FountainDto} objects representing the client's favorite fountains.
      */
-    List<FountainDto> GetClientFavourites(int id);
+    List<FountainDto> getClientFavourites(int id);
+
+    /**
+     * Adds a favorite fountain to the client's favorites list.
+     * The method returns the fountain added.
+     *
+     * @param id The unique identifier of the client whose favorites list is being updated.
+     * @return The fountain {@link FountainDto} object added to the list.
+     */
+    FountainDto addFavourite(int id, FountainDto fountainDto);
 }

@@ -41,7 +41,7 @@ public class TesterService implements ITesterService {
      * @throws UserNotFoundException If the tester with the provided ID is not found.
      */
     @Override
-    public Tester getClientById(int id) {
+    public Tester getTesterById(int id) {
         Optional<Tester> tester = testerRepository.findById(id);
 
         if (tester.isEmpty()) {
@@ -58,7 +58,7 @@ public class TesterService implements ITesterService {
      * @throws UserNotFoundException If no testers are found.
      */
     @Override
-    public List<Tester> getAllClients() {
+    public List<Tester> getAllTesters() {
         List<Tester> testers = testerRepository.findAll();
 
         if (testers.isEmpty()) {
@@ -79,13 +79,13 @@ public class TesterService implements ITesterService {
      * @throws RepositoryException If an error occurs while saving the updated tester.
      */
     @Override
-    public Tester updateClient(int id, Tester tester) {
+    public Tester updateTester(int id, Tester tester) {
 
         if (id != tester.getId()) {
             throw new ParamException("IDs do not match.");
         }
 
-        Tester updateTester = getClientById(id);
+        Tester updateTester = getTesterById(id);
 
         updateTester.setName(tester.getName());
         updateTester.setEmail(tester.getEmail());
@@ -108,7 +108,7 @@ public class TesterService implements ITesterService {
      * @throws RepositoryException If an error occurs while saving the tester.
      */
     @Override
-    public Tester createClient(Tester tester) {
+    public Tester createTester(Tester tester) {
 
         try {
             testerRepository.save(tester);
@@ -128,7 +128,7 @@ public class TesterService implements ITesterService {
      */
     @Override
     public List<WaterAnalysisDto> getTesterWaterAnalysis(int id) {
-        Tester tester = getClientById(id);
+        Tester tester = getTesterById(id);
         return tester.getWaterAnalysis();
     }
 

@@ -100,10 +100,13 @@ public class ClientController {
 
             clientService.updateClient(id, updatedClient);
             return ResponseEntity.ok(userDto);
+
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
         } catch (ParamException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+
         } catch (RepositoryException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -126,7 +129,7 @@ public class ClientController {
             newClient.role = userFullDto.role;
 
             clientService.createClient(newClient);
-            return ResponseEntity.status(HttpStatus.CREATED).body(usersMapper.UserToDto(newClient));
+            return ResponseEntity.status(HttpStatus.CREATED).body(usersMapper.ClientToDto(newClient));
         } catch (RepositoryException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -161,8 +164,8 @@ public class ClientController {
     @PutMapping("/addfavorite/{id}")
     public ResponseEntity<?> addFavourite(@PathVariable int id, @RequestBody FountainDto fountainDto) {
         try {
-            FountainDto favorite = clientService.addFavourite(id, fountainDto);
-            return ResponseEntity.ok(favorite);
+            return ResponseEntity.ok(clientService.addFavourite(id, fountainDto));
+
         } catch (ParamException | UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -180,8 +183,8 @@ public class ClientController {
     @PutMapping("/removefavorite/{id}")
     public ResponseEntity<?> removeFavourite(@PathVariable int id, @RequestBody FountainDto fountainDto) {
         try {
-            FountainDto removedFavorite = clientService.removeFavourite(id, fountainDto);
-            return ResponseEntity.ok(removedFavorite);
+            return ResponseEntity.ok(clientService.removeFavourite(id, fountainDto));
+
         } catch (ParamException | UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

@@ -18,14 +18,14 @@ public interface ITesterService {
      * @param id The unique identifier of the tester to be retrieved.
      * @return The {@link Tester} object associated with the provided ID.
      */
-    Tester getClientById(int id);
+    Tester getTesterById(int id);
 
     /**
      * Retrieves all testers in the system.
      *
      * @return A list of {@link Tester} objects representing all testers.
      */
-    List<Tester> getAllClients();
+    List<Tester> getAllTesters();
 
     /**
      * Updates an existing tester with the provided data.
@@ -35,7 +35,7 @@ public interface ITesterService {
      * @param tester The {@link Tester} object containing the updated data.
      * @return The updated {@link Tester} object.
      */
-    Tester updateClient(int id, Tester tester);
+    Tester updateTester(int id, Tester tester);
 
     /**
      * Creates a new tester with the provided data.
@@ -43,7 +43,7 @@ public interface ITesterService {
      * @param tester The {@link Tester} object to be created.
      * @return The newly created {@link Tester} object.
      */
-    Tester createClient(Tester tester);
+    Tester createTester(Tester tester);
 
     /**
      * Retrieves a tester's list of favorite water analyses.

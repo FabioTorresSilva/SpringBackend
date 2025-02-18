@@ -19,13 +19,6 @@ import java.util.List;
 public class Tester extends User {
 
     /**
-     * Unique identifier for the Tester.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int idTester;
-
-    /**
      * A transient list of water analyses associated with the Tester.
      * This field is not persisted in the database.
      */

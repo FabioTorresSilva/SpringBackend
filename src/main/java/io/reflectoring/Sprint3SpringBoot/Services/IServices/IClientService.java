@@ -62,4 +62,13 @@ public interface IClientService {
      * @return The fountain {@link FountainDto} object added to the list.
      */
     FountainDto addFavourite(int id, FountainDto fountainDto);
+
+    /**
+     * Removes a favorite fountain from the client's favorites list.
+     * The method returns the fountain removed.
+     *
+     * @param id The unique identifier of the client whose favorites list is being updated.
+     * @return The fountain {@link FountainDto} object added to the list.
+     */
+    FountainDto removeFavourite(int id, FountainDto fountainDto);
 }

@@ -157,4 +157,21 @@ public class ClientService implements IClientService {
 
         return fountainDto;
     }
+
+    @Override
+    public FountainDto removeFavourite(int id, FountainDto fountainDto){
+        if(fountainDto == null)
+            throw new ParamException("Fountain does not exist");
+
+        Optional<Client> client = clientRepository.findById(id);
+
+        if (client.isEmpty()) {
+            throw new UserNotFoundException("Client with ID " + id + " not found.");
+        }
+
+        Client clt = client.get();
+        clt.favourites.remove(fountainDto);
+
+        return fountainDto;
+    }
 }

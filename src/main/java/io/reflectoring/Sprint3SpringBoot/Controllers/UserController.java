@@ -87,7 +87,6 @@ public class UserController {
             User updatedUser = userService.getUserById(id);
             updatedUser.name = userDto.name;
             updatedUser.email = userDto.email;
-            updatedUser.role = userDto.role;
 
             userService.updateUser(id, updatedUser);
             return ResponseEntity.ok(userDto);

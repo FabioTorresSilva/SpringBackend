@@ -1,6 +1,6 @@
 package io.reflectoring.Sprint3SpringBoot.Retrofit.Config;
 
-import io.reflectoring.Sprint3SpringBoot.Retrofit.IRetrofit.*;
+import io.reflectoring.Sprint3SpringBoot.Retrofit.IService.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;

@@ -1,4 +1,4 @@
-package io.reflectoring.Sprint3SpringBoot.Retrofit.IRetrofit;
+package io.reflectoring.Sprint3SpringBoot.Retrofit.IService;
 
 import io.reflectoring.Sprint3SpringBoot.Dto.ContinuousUseDeviceDto;
 import retrofit2.Call;

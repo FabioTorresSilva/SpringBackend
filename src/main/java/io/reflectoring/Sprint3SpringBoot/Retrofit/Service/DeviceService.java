@@ -1,15 +1,14 @@
-package io.reflectoring.Sprint3SpringBoot.Retrofit;
+package io.reflectoring.Sprint3SpringBoot.Retrofit.Service;
 
 import io.reflectoring.Sprint3SpringBoot.Dto.DeviceDto;
 import io.reflectoring.Sprint3SpringBoot.Exceptions.RetrofitException;
-import io.reflectoring.Sprint3SpringBoot.Retrofit.IRetrofit.IDeviceService;
+import io.reflectoring.Sprint3SpringBoot.Retrofit.IService.IDeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Service class for handling device-related operations using Retrofit.

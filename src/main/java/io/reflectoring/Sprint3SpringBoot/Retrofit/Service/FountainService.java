@@ -1,8 +1,8 @@
-package io.reflectoring.Sprint3SpringBoot.Retrofit;
+package io.reflectoring.Sprint3SpringBoot.Retrofit.Service;
 
 import io.reflectoring.Sprint3SpringBoot.Dto.FountainDto;
 import io.reflectoring.Sprint3SpringBoot.Exceptions.RetrofitException;
-import io.reflectoring.Sprint3SpringBoot.Retrofit.IRetrofit.IFountainService;
+import io.reflectoring.Sprint3SpringBoot.Retrofit.IService.IFountainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;

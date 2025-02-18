@@ -1,6 +1,7 @@
 package io.reflectoring.Sprint3SpringBoot.Retrofit;
 
 import io.reflectoring.Sprint3SpringBoot.Dto.DeviceDto;
+import io.reflectoring.Sprint3SpringBoot.Exceptions.RetrofitException;
 import io.reflectoring.Sprint3SpringBoot.Retrofit.IRetrofit.IDeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,10 +37,10 @@ public class DeviceService {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                throw new RuntimeException("Error: " + response.code());
+                throw new RetrofitException("Error: " + response.code());
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error fetching device by ID", e);
+            throw new RetrofitException("Error fetching device by ID" + e);
         }
     }
 
@@ -54,10 +55,10 @@ public class DeviceService {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                throw new RuntimeException("Error: " + response.code());
+                throw new RetrofitException("Error: " + response.code());
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error fetching all devices", e);
+            throw new RetrofitException("Error fetching all devices" + e);
         }
     }
 
@@ -74,10 +75,10 @@ public class DeviceService {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                throw new RuntimeException("Error updating device: " + response.code());
+                throw new RetrofitException("Error updating device: " + response.code());
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error updating device", e);
+            throw new RetrofitException("Error updating device" + e);
         }
     }
 
@@ -93,10 +94,10 @@ public class DeviceService {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                throw new RuntimeException("Error creating device: " + response.code());
+                throw new RetrofitException("Error creating device: " + response.code());
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error creating device", e);
+            throw new RetrofitException("Error creating device" + e);
         }
     }
 }

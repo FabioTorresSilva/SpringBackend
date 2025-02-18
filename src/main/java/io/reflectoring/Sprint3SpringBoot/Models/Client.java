@@ -2,10 +2,7 @@ package io.reflectoring.Sprint3SpringBoot.Models;
 
 import io.reflectoring.Sprint3SpringBoot.Dto.FountainDto;
 import io.reflectoring.Sprint3SpringBoot.Enums.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +18,8 @@ public class Client extends User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int idClient;
 
-    public List<FountainDto> favourites;
+    @Transient
+    public ArrayList<FountainDto> favourites;
 
     public Client(String name, String email, String password) {
         super(name, email, password);

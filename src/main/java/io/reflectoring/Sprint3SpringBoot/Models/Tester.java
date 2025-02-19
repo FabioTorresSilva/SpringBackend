@@ -14,8 +14,6 @@ import java.util.List;
  * A Tester is responsible for conducting water analysis.
  */
 @Entity
-@Getter
-@Setter
 public class Tester extends User {
 
     /**
@@ -45,5 +43,13 @@ public class Tester extends User {
      */
     public Tester() {
         role = Role.Tester;
+    }
+
+    public List<WaterAnalysisDto> getWaterAnalysis() {
+        return waterAnalysis;
+    }
+
+    public void setWaterAnalysis(List<WaterAnalysisDto> waterAnalysis) {
+        this.waterAnalysis = waterAnalysis;
     }
 }

@@ -14,8 +14,6 @@ import java.util.ArrayList;
  * Clients can also have a list of favorite fountains.
  */
 @Entity
-@Getter
-@Setter
 public class Client extends User {
 
     /**
@@ -45,5 +43,13 @@ public class Client extends User {
      */
     public Client() {
         role = Role.Client;
+    }
+
+    public ArrayList<FountainDto> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(ArrayList<FountainDto> favourites) {
+        this.favourites = favourites;
     }
 }

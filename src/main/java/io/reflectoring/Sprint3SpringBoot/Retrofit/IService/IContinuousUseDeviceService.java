@@ -1,6 +1,7 @@
 package io.reflectoring.Sprint3SpringBoot.Retrofit.IService;
 
 import io.reflectoring.Sprint3SpringBoot.Dto.ContinuousUseDeviceDto;
+import jdk.jfr.Frequency;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -38,6 +39,9 @@ public interface IContinuousUseDeviceService {
      */
     @PUT("/{id}")
     Call<ContinuousUseDeviceDto> updateContinuousUseDevice(@Path("id") int id, @Body ContinuousUseDeviceDto continuousUseDeviceDto);
+
+    @PUT("/{id}/frequency")
+    Call<ContinuousUseDeviceDto> updateFrequency(@Path("id") int id, @Body ContinuousUseDeviceDto continuousUseDeviceDto, int frequency);
 
     /**
      * Creates a new continuous use device using the provided data.

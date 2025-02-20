@@ -86,6 +86,19 @@ public class ContinuousUseDeviceService {
         }
     }
 
+    public ContinuousUseDeviceDto updateContinuousUseDeviceFrequency(int id, ContinuousUseDeviceDto continuousUseDeviceDto, int frequency) {
+        try{
+            Response<ContinuousUseDeviceDto> response = continuousUseDeviceService.updateFrequency(id, continuousUseDeviceDto, frequency).execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            }else {
+                throw new RetrofitException("Error updating frequency from continuous use device with ID: \" + id + \", Status Code: \" + response.code()");
+            }
+        }catch (IOException e){
+            throw new RetrofitException("Failed to update frequency from continuous use device with ID: " + id + e);
+        }
+    }
+
     /**
      * Creates a new continuous use device.
      *

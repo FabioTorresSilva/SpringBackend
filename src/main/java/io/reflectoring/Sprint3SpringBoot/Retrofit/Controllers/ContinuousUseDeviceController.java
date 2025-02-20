@@ -45,4 +45,28 @@ public class ContinuousUseDeviceController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @PostMapping
+    public ResponseEntity<ContinuousUseDeviceDto> createContinuousUseDevice(@RequestBody ContinuousUseDeviceDto continuousUseDeviceDto) {
+        try{
+            ContinuousUseDeviceDto continuousUseDeviceDtoCreated = continuousUseDeviceService.createContinuousUseDevice(continuousUseDeviceDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(continuousUseDeviceDtoCreated);
+        }catch (RetrofitException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PutMapping("id")
+    public ResponseEntity<ContinuousUseDeviceDto> updateContinuousUseDevice(@RequestBody ContinuousUseDeviceDto continuousUseDeviceDto, @PathVariable("id") int id) {
+        if (id <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        try {
+            ContinuousUseDeviceDto continuousUseDeviceDtoUpdated = continuousUseDeviceService.updateContinuousUseDevice(id, continuousUseDeviceDto);
+            return ResponseEntity.ok(continuousUseDeviceDtoUpdated);
+        } catch (RetrofitException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }

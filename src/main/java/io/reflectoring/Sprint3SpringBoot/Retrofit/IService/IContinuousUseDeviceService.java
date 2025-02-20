@@ -33,13 +33,21 @@ public interface IContinuousUseDeviceService {
     /**
      * Updates an existing continuous use device with the provided data.
      *
-     * @param id                   The unique identifier of the continuous use device to be updated.
+     * @param id The unique identifier of the continuous use device to be updated.
      * @param continuousUseDeviceDto A {@link ContinuousUseDeviceDto} object containing the updated data.
      * @return a {@link Call} object containing the updated {@link ContinuousUseDeviceDto}.
      */
     @PUT("/{id}")
     Call<ContinuousUseDeviceDto> updateContinuousUseDevice(@Path("id") int id, @Body ContinuousUseDeviceDto continuousUseDeviceDto);
 
+    /**
+     * Updates the frequency from a continuous use device with the provided data.
+     *
+     * @param id The unique identifier of the continuous use device to be updated.
+     * @param continuousUseDeviceDto A {@link ContinuousUseDeviceDto} object containing the updated data.
+     * @param frequency The frequency that will be changed.
+     * @return a {@link Call} object containing the updated {@link ContinuousUseDeviceDto} with new frequency.
+      */
     @PUT("/{id}/frequency")
     Call<ContinuousUseDeviceDto> updateFrequency(@Path("id") int id, @Body ContinuousUseDeviceDto continuousUseDeviceDto, int frequency);
 

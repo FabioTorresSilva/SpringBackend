@@ -105,6 +105,10 @@ public class FountainService {
         }
     }
 
+//    public FountainDto addContinuousUseDeviceToFountain(int fountainId, int deviceId) {
+//
+//    }
+
     /**
      * Deletes a specific fountain by its unique identifier.
      *

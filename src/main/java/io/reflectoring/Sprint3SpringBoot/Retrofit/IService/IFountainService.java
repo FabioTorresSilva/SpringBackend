@@ -1,5 +1,6 @@
 package io.reflectoring.Sprint3SpringBoot.Retrofit.IService;
 
+import io.reflectoring.Sprint3SpringBoot.Dto.ContinuousUseDeviceDto;
 import io.reflectoring.Sprint3SpringBoot.Dto.FountainDto;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -47,6 +48,9 @@ public interface IFountainService {
      */
     @POST()
     Call<FountainDto> createFountain(@Body FountainDto fountain);
+
+    @POST()
+    Call<FountainDto> addContinuousUseDeviceToFountain(@Path("id")int fountainId, @Path("id") int deviceId);
 
     /**
      * Deletes a specific fountain by its unique identifier.

@@ -23,7 +23,7 @@ public class ContinuousUseDeviceController {
         this.continuousUseDeviceService = continuousUseDeviceService;
     }
 
-    @GetMapping("/all-continuous-use")
+    @GetMapping
     public ResponseEntity<List<ContinuousUseDeviceDto>> getAllContinuousUseDevices() {
         try {
             List<ContinuousUseDeviceDto> devices = ContinuousUseDeviceService.getAllContinuousUseDevices();
@@ -33,19 +33,16 @@ public class ContinuousUseDeviceController {
         }
     }
 
-    @GetMapping("/continuous-use/{id}")
-    public ResponseEntity<String> getContinuousUseDeviceById(@PathVariable("id") int id) {
-        if (id <= 0) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID. ID must be greater than zero.");
+    @GetMapping("/{id}")
+    public ResponseEntity<ContinuousUseDeviceDto> getContinuousUseDeviceById(@PathVariable("id") int deviceId) {
+        if (deviceId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        try{
+        try {
             ContinuousUseDeviceDto continuousUseDeviceDto = continuousUseDeviceService.getContinuousUseDeviceById(id);
-            if(continuousUseDeviceDto == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Device not found.");
-            }
-            return ResponseEntity.ok(continuousUseDeviceDto.toString());
-            } catch (RetrofitException e) {
+            return continuousUseDeviceDto != null ? ResponseEntity.ok(continuousUseDeviceDto) : ResponseEntity.notFound().build();
+        }catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-         }
+        }
     }
 }

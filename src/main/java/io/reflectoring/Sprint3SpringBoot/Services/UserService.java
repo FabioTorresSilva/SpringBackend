@@ -1,13 +1,20 @@
 package io.reflectoring.Sprint3SpringBoot.Services;
 
+import io.reflectoring.Sprint3SpringBoot.Dto.FountainDto;
+import io.reflectoring.Sprint3SpringBoot.Dto.WaterAnalysisDto;
+import io.reflectoring.Sprint3SpringBoot.Enums.Role;
 import io.reflectoring.Sprint3SpringBoot.Exceptions.ParamException;
 import io.reflectoring.Sprint3SpringBoot.Exceptions.RepositoryException;
+import io.reflectoring.Sprint3SpringBoot.Exceptions.RoleNotAcepted;
 import io.reflectoring.Sprint3SpringBoot.Exceptions.UserNotFoundException;
 import io.reflectoring.Sprint3SpringBoot.Models.User;
 import io.reflectoring.Sprint3SpringBoot.Repositories.UserRepository;
 import io.reflectoring.Sprint3SpringBoot.Services.IServices.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -62,14 +69,14 @@ public class UserService implements IUserService {
     @Override
     public User updateUser(int id, User user) {
 
-        if (id != user.id)
+        if (id != user.getId())
             throw new ParamException("Ids do not match.");
 
         User updateUser = getUserById(id);
 
-        updateUser.name = user.name;
-        updateUser.email = user.email;
-        updateUser.password = user.password;
+        updateUser.setName(user.getName());
+        updateUser.setEmail(user.getEmail());
+        updateUser.setPassword(user.getPassword());
 
         try{
             userRepository.save(updateUser);
@@ -96,5 +103,164 @@ public class UserService implements IUserService {
         }
 
         return user;
+    }
+
+    /**
+     * Retrieves a user's list of favorite fountains.
+     *
+     * @param id The unique identifier of the user.
+     * @return A list of {@link FountainDto} representing the user's favorite fountains.
+     * @throws UserNotFoundException If the user with the given ID is not found.
+     * @throws RoleNotAcepted If the user is not a client.
+     */
+    @Override
+    public List<FountainDto> getUserFavourites(int id) {
+        User user = getUserById(id);
+
+        if (user.getRole() != Role.Client)
+            throw new RoleNotAcepted("User with ID " + id + " is not a client.");
+
+        return user.getFavourites();
+    }
+
+    /**
+     * Adds a fountain to a user's list of favorites.
+     *
+     * @param id The unique identifier of the user.
+     * @param fountainDto The fountain to be added as a favorite.
+     * @return The added {@link FountainDto}.
+     * @throws UserNotFoundException If the user with the given ID is not found.
+     * @throws RoleNotAcepted If the user is not a client.
+     * @throws ParamException If the provided fountain is null.
+     */
+    @Override
+    public FountainDto addFavourite(int id, FountainDto fountainDto) {
+
+        if(fountainDto == null)
+            throw new ParamException("Fountain does not exist");
+
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User with ID " + id + " not found.");
+        }
+
+        if (user.get().getRole() != Role.Client)
+            throw new RoleNotAcepted("User with ID " + id + " is not a client.");
+
+        User usr = user.get();
+        usr.getFavourites().add(fountainDto);
+
+        return fountainDto;
+    }
+
+    /**
+     * Removes a fountain from a user's list of favorites.
+     *
+     * @param id The unique identifier of the user.
+     * @param fountainDto The fountain to be removed from favorites.
+     * @return The removed {@link FountainDto}.
+     * @throws UserNotFoundException If the user with the given ID is not found.
+     * @throws RoleNotAcepted If the user is not a client.
+     * @throws ParamException If the provided fountain is null.
+     */
+    @Override
+    public FountainDto removeFavourite(int id, FountainDto fountainDto){
+        if(fountainDto == null)
+            throw new ParamException("Fountain does not exist");
+
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User with ID " + id + " not found.");
+        }
+
+        if (user.get().getRole() != Role.Client)
+            throw new RoleNotAcepted("User with ID " + id + " is not a client.");
+
+        User usr = user.get();
+        usr.getFavourites().remove(fountainDto);
+
+        return fountainDto;
+    }
+
+    /**
+     * Retrieves a tester's list of water analyses.
+     *
+     * @param id The unique identifier of the tester.
+     * @return A list of {@link WaterAnalysisDto} representing the tester's water analyses.
+     * @throws UserNotFoundException If the user with the given ID is not found.
+     * @throws RoleNotAcepted If the user is not a tester.
+     */
+    @Override
+    public List<WaterAnalysisDto> getTesterWaterAnalysis(int id) {
+        User user = getUserById(id);
+
+        if (user.getRole() != Role.Tester)
+            throw new RoleNotAcepted("User with ID " + id + " is not a tester.");
+
+        return user.getWaterAnalysis();
+    }
+
+    /**
+     * Adds a water analysis to a tester's records.
+     *
+     * @param id The unique identifier of the tester.
+     * @param waterAnalysisDto The water analysis to be added.
+     * @return The added {@link WaterAnalysisDto}.
+     * @throws UserNotFoundException If the tester with the given ID is not found.
+     * @throws RoleNotAcepted If the user is not a tester.
+     * @throws ParamException If the provided water analysis is null.
+     */
+    @Override
+    public WaterAnalysisDto addWaterAnalysis(int id, WaterAnalysisDto waterAnalysisDto) {
+
+        if (waterAnalysisDto == null) {
+            throw new ParamException("Water analysis does not exist.");
+        }
+
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("Tester with ID " + id + " not found.");
+        }
+
+        if (user.get().getRole() != Role.Tester)
+            throw new RoleNotAcepted("User is not a tester.");
+
+        User usr = user.get();
+        usr.getWaterAnalysis().add(waterAnalysisDto);
+
+        return waterAnalysisDto;
+    }
+
+    /**
+     * Retrieves all users with the specified role.
+     *
+     * @param role The role of the users to be retrieved.
+     * @return A list of {@link User} objects with the specified role.
+     * @throws UserNotFoundException If no users with the given role are found.
+     */
+    @Override
+    public List<User> getAllUsersByRole(Role role){
+
+        List<User> allUsers = userRepository.findAll();
+
+        if (allUsers.isEmpty()) {
+            throw new UserNotFoundException("No users found.");
+        }
+
+        List<User> usersRole = new ArrayList<>();
+
+        for(User u : allUsers){
+            if(u.getRole() == role)
+                usersRole.add(u);
+        }
+
+        if (usersRole.isEmpty()) {
+            throw new UserNotFoundException("No users with role '" + role + "' found.");
+        }
+
+        return usersRole;
     }
 }

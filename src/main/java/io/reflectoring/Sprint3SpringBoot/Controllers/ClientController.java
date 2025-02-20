@@ -23,6 +23,7 @@ import java.util.List;
  * Provides endpoints for retrieving, creating, updating, and managing client favorites.
  * </p>
  */
+
 @RestController
 @RequestMapping("/api/client")
 public class ClientController {

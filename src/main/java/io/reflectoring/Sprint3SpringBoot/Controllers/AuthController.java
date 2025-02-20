@@ -1,5 +1,7 @@
 package io.reflectoring.Sprint3SpringBoot.Controllers;
 
+import io.reflectoring.Sprint3SpringBoot.Dto.SigninDto;
+import io.reflectoring.Sprint3SpringBoot.Models.Client;
 import io.reflectoring.Sprint3SpringBoot.Models.User;
 import io.reflectoring.Sprint3SpringBoot.JWT.JwtUtil;
 import io.reflectoring.Sprint3SpringBoot.Repositories.UserRepository;
@@ -33,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public String authenticateUser(@RequestBody User user) {
+    public SigninDto authenticateUser(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getEmail(),
@@ -41,7 +43,7 @@ public class AuthController {
                 )
         );
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return jwtUtils.generateToken(userDetails.getUsername());
+        return new SigninDto(user.role ,jwtUtils.generateToken(userDetails.getUsername()));
     }
     @PostMapping("/signup")
     public String registerUser(@RequestBody User user) {
@@ -49,7 +51,7 @@ public class AuthController {
             return "Error: Username is already taken!";
         }
         // Create new user's account
-        User newUser = new User(
+        Client newUser = new Client(
                 user.getName(),
                 user.getEmail(),
                 encoder.encode(user.getPassword())

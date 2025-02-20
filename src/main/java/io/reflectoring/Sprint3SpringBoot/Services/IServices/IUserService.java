@@ -1,6 +1,11 @@
 package io.reflectoring.Sprint3SpringBoot.Services.IServices;
 
+import io.reflectoring.Sprint3SpringBoot.Dto.FountainDto;
+import io.reflectoring.Sprint3SpringBoot.Dto.WaterAnalysisDto;
+import io.reflectoring.Sprint3SpringBoot.Enums.Role;
 import io.reflectoring.Sprint3SpringBoot.Models.User;
+
+import java.util.List;
 
 /**
  * Service interface for managing user operations.
@@ -32,4 +37,16 @@ public interface IUserService {
      * @return The newly created {@link User} object.
      */
     User createUser(User user);
+
+    FountainDto addFavourite(int id, FountainDto fountainDto);
+
+    FountainDto removeFavourite(int id, FountainDto fountainDto);
+
+    List<FountainDto> getUserFavourites(int id);
+
+    WaterAnalysisDto addWaterAnalysis(int id, WaterAnalysisDto waterAnalysisDto);
+
+    List<WaterAnalysisDto> getTesterWaterAnalysis(int id);
+
+    List<User> getAllUsersByRole(Role role);
 }

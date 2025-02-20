@@ -16,11 +16,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
+
     @Autowired
     @Lazy
     private JwtUtil jwtUtil;
+
     @Autowired
     private CustomUserDetailsService userDetailsService;
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,

@@ -32,7 +32,7 @@ public class DeviceController {
         }
     }
 
-    @GetMapping("id")
+    @GetMapping("/{id}")
     public ResponseEntity<DeviceDto> getDeviceById(@RequestParam("id") Integer id) {
         if (id <= 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -54,7 +54,7 @@ public class DeviceController {
         }
     }
 
-    @PutMapping("id")
+    @PutMapping("/{id}")
     public ResponseEntity<DeviceDto> updateDevice(@RequestBody DeviceDto device, @PathVariable int id) {
         if(id <= 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

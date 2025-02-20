@@ -56,7 +56,7 @@ public class ContinuousUseDeviceController {
         }
     }
 
-    @PutMapping("id")
+    @PutMapping("/{id}")
     public ResponseEntity<ContinuousUseDeviceDto> updateContinuousUseDevice(@RequestBody ContinuousUseDeviceDto continuousUseDeviceDto, @PathVariable("id") int id) {
         if (id <= 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -68,5 +68,4 @@ public class ContinuousUseDeviceController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
 }

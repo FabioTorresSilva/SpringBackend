@@ -31,7 +31,7 @@ public class WaterAnalysisController {
         }
     }
 
-    @GetMapping("id")
+    @GetMapping("/{id}")
     public ResponseEntity<WaterAnalysisDto> getWaterAnalysisById(@PathVariable("id") int id) {
         if(id <= 0){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -43,7 +43,7 @@ public class WaterAnalysisController {
         }
     }
 
-    @PutMapping("id")
+    @PutMapping("/{id}")
     public ResponseEntity<WaterAnalysisDto> updateWaterAnalysisById(@RequestBody WaterAnalysisDto waterAnalysis, @PathVariable("id") int id) {
         if(id <= 0){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -64,5 +64,4 @@ public class WaterAnalysisController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

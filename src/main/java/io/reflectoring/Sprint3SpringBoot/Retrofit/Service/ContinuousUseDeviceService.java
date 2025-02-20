@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class ContinuousUseDeviceService {
 
-    private static IContinuousUseDeviceService continuousUseDeviceService = null;
+    private final IContinuousUseDeviceService continuousUseDeviceService;
 
     /**
      * Constructor for dependency injection.
@@ -34,7 +34,7 @@ public class ContinuousUseDeviceService {
      *
      * @return A list of {@link ContinuousUseDeviceDto} objects representing all continuous use devices.
      */
-    public static List<ContinuousUseDeviceDto> getAllContinuousUseDevices() {
+    public List<ContinuousUseDeviceDto> getAllContinuousUseDevices() {
         try {
             Response<List<ContinuousUseDeviceDto>> response = continuousUseDeviceService.getAllContinuousUseDevices().execute();
             if (response.isSuccessful()) {

@@ -26,8 +26,8 @@ public class ContinuousUseDeviceController {
     @GetMapping
     public ResponseEntity<List<ContinuousUseDeviceDto>> getAllContinuousUseDevices() {
         try {
-            List<ContinuousUseDeviceDto> devices = ContinuousUseDeviceService.getAllContinuousUseDevices();
-            return ResponseEntity.ok(devices);
+            List<ContinuousUseDeviceDto> devices = continuousUseDeviceService.getAllContinuousUseDevices();
+            return devices.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(devices, HttpStatus.OK);
         } catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
         }

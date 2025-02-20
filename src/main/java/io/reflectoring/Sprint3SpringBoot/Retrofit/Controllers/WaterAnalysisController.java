@@ -25,7 +25,7 @@ public class WaterAnalysisController {
     public ResponseEntity<List<WaterAnalysisDto>> getAllWaterAnalysis() {
         try{
             List<WaterAnalysisDto> waterAnalysis = waterAnalysisService.getAllWaterAnalyses();
-            return new ResponseEntity<>(waterAnalysis, HttpStatus.OK);
+            return waterAnalysis.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(waterAnalysis, HttpStatus.OK);
         }catch (RetrofitException e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

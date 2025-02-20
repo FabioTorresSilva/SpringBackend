@@ -148,7 +148,7 @@ public class UserController {
      * @param role The role of users to retrieve.
      * @return A ResponseEntity containing a list of {@link User}.
      */
-    @GetMapping("/user/{role}")
+    @GetMapping("/role/{role}")
     public ResponseEntity<?> getAllUsersByRole(@PathVariable Role role){
         try{
             return ResponseEntity.ok(userService.getAllUsersByRole(role));

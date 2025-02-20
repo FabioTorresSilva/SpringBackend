@@ -1,11 +1,9 @@
 package io.reflectoring.Sprint3SpringBoot.Controllers;
 
 import io.reflectoring.Sprint3SpringBoot.Dto.SigninDto;
-import io.reflectoring.Sprint3SpringBoot.Models.Client;
 import io.reflectoring.Sprint3SpringBoot.Models.User;
 import io.reflectoring.Sprint3SpringBoot.JWT.JwtUtil;
 import io.reflectoring.Sprint3SpringBoot.Repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,7 +41,7 @@ public class AuthController {
                 )
         );
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return new SigninDto(user.role ,jwtUtils.generateToken(userDetails.getUsername()));
+        return new SigninDto(user.getRole(),jwtUtils.generateToken(userDetails.getUsername()));
     }
     @PostMapping("/signup")
     public String registerUser(@RequestBody User user) {
@@ -51,10 +49,11 @@ public class AuthController {
             return "Error: Username is already taken!";
         }
         // Create new user's account
-        Client newUser = new Client(
+        User newUser = new User(
                 user.getName(),
                 user.getEmail(),
-                encoder.encode(user.getPassword())
+                encoder.encode(user.getPassword()),
+                user.getRole()
         );
         userRepository.save(newUser);
         return "User registered successfully!";

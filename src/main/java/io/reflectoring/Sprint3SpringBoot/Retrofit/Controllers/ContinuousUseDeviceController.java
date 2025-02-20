@@ -39,7 +39,7 @@ public class ContinuousUseDeviceController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         try {
-            ContinuousUseDeviceDto continuousUseDeviceDto = continuousUseDeviceService.getContinuousUseDeviceById(id);
+            ContinuousUseDeviceDto continuousUseDeviceDto = continuousUseDeviceService.getContinuousUseDeviceById(deviceId);
             return continuousUseDeviceDto != null ? ResponseEntity.ok(continuousUseDeviceDto) : ResponseEntity.notFound().build();
         }catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

@@ -1,6 +1,6 @@
 package io.reflectoring.Sprint3SpringBoot.Dto;
 
-import io.reflectoring.Sprint3SpringBoot.Enums.SuscptibilityIndex;
+import io.reflectoring.Sprint3SpringBoot.Enums.SusceptibilityIndex;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +25,8 @@ public class FountainDto {
     /**
      * The susceptibility index of the fountain, indicating its vulnerability to contamination.
      */
-    public SuscptibilityIndex suscptibilityIndex;
+    public SusceptibilityIndex susceptibilityIndex;
+
 
     /**
      * The identifier of the device associated with the fountain.

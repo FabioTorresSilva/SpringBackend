@@ -18,7 +18,7 @@ public interface IContinuousUseDeviceService {
      *
      * @return a {@link Call} object containing a list of {@link ContinuousUseDeviceDto}.
      */
-    @GET()
+    @GET("")
     Call<List<ContinuousUseDeviceDto>> getAllContinuousUseDevices();
 
     /**
@@ -57,6 +57,6 @@ public interface IContinuousUseDeviceService {
      * @param continuousUseDeviceDto A {@link ContinuousUseDeviceDto} object containing the data for the new device.
      * @return a {@link Call} object containing the created {@link ContinuousUseDeviceDto}.
      */
-    @POST()
+    @POST("")
     Call<ContinuousUseDeviceDto> createContinuousUseDevice(@Body ContinuousUseDeviceDto continuousUseDeviceDto);
 }

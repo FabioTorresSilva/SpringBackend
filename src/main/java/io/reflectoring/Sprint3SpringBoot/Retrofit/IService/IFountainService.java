@@ -1,6 +1,5 @@
 package io.reflectoring.Sprint3SpringBoot.Retrofit.IService;
 
-import io.reflectoring.Sprint3SpringBoot.Dto.ContinuousUseDeviceDto;
 import io.reflectoring.Sprint3SpringBoot.Dto.FountainDto;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -18,7 +17,7 @@ public interface IFountainService {
      *
      * @return a {@link Call} object containing a list of {@link FountainDto} representing all fountains.
      */
-    @GET()
+    @GET("fountains")
     Call<List<FountainDto>> getAllFountains();
 
     /**

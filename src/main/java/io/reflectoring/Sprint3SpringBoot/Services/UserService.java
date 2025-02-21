@@ -65,6 +65,9 @@ public class UserService implements IUserService {
         if (id != user.id)
             throw new ParamException("Ids do not match.");
 
+        if (userRepository.findUserByEmail(user.email) != null)
+            throw new ParamException("Email already exists");
+
         User updateUser = getUserById(id);
 
         updateUser.name = user.name;

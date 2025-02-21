@@ -18,7 +18,7 @@ public interface IContinuousUseDeviceService {
      *
      * @return a {@link Call} object containing a list of {@link ContinuousUseDeviceDto}.
      */
-    @GET("")
+    @GET("continuoususedevices")
     Call<List<ContinuousUseDeviceDto>> getAllContinuousUseDevices();
 
     /**
@@ -27,7 +27,7 @@ public interface IContinuousUseDeviceService {
      * @param id The unique identifier of the continuous use device.
      * @return a {@link Call} object containing the requested {@link ContinuousUseDeviceDto}.
      */
-    @GET("/{id}")
+    @GET("continuoususedevices/{id}")
     Call<ContinuousUseDeviceDto> getContinuousUseDeviceById(@Path("id") int id);
 
     /**
@@ -37,7 +37,7 @@ public interface IContinuousUseDeviceService {
      * @param continuousUseDeviceDto A {@link ContinuousUseDeviceDto} object containing the updated data.
      * @return a {@link Call} object containing the updated {@link ContinuousUseDeviceDto}.
      */
-    @PUT("/{id}")
+    @PUT("continuoususedevices/{id}")
     Call<ContinuousUseDeviceDto> updateContinuousUseDevice(@Path("id") int id, @Body ContinuousUseDeviceDto continuousUseDeviceDto);
 
     /**
@@ -48,7 +48,7 @@ public interface IContinuousUseDeviceService {
      * @param frequency The frequency that will be changed.
      * @return a {@link Call} object containing the updated {@link ContinuousUseDeviceDto} with new frequency.
       */
-    @PUT("/{id}/frequency")
+    @PUT("continuoususedevices/{id}/frequency")
     Call<ContinuousUseDeviceDto> updateFrequency(@Path("id") int id, @Body ContinuousUseDeviceDto continuousUseDeviceDto, int frequency);
 
     /**
@@ -57,6 +57,6 @@ public interface IContinuousUseDeviceService {
      * @param continuousUseDeviceDto A {@link ContinuousUseDeviceDto} object containing the data for the new device.
      * @return a {@link Call} object containing the created {@link ContinuousUseDeviceDto}.
      */
-    @POST("")
+    @POST("continuoususedevices")
     Call<ContinuousUseDeviceDto> createContinuousUseDevice(@Body ContinuousUseDeviceDto continuousUseDeviceDto);
 }

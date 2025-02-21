@@ -26,7 +26,7 @@ public interface IFountainService {
      * @param id The unique identifier of the fountain.
      * @return a {@link Call} object containing a {@link FountainDto} representing the requested fountain.
      */
-    @GET("/{id}")
+    @GET("fountains/{id}")
     Call<FountainDto> getFountainById(@Path("id") int id);
 
     /**
@@ -36,7 +36,7 @@ public interface IFountainService {
      * @param fountain A {@link FountainDto} object containing the updated fountain data.
      * @return a {@link Call} object containing the updated {@link FountainDto}.
      */
-    @PUT("/{id}")
+    @PUT("fountains/{id}")
     Call<FountainDto> updateFountain(@Path("id") int id, @Body FountainDto fountain);
 
     /**
@@ -45,10 +45,16 @@ public interface IFountainService {
      * @param fountain A {@link FountainDto} object containing the data for the new fountain.
      * @return a {@link Call} object containing the created {@link FountainDto}.
      */
-    @POST()
+    @POST("fountains")
     Call<FountainDto> createFountain(@Body FountainDto fountain);
 
-    @POST()
+    /**
+     * Creates a continuous use device to a fountain.
+     * @param fountainId The unique identifier of the fountain.
+     * @param deviceId The unique identifier of the continuous use device to be added to the fountain.
+     * @return a {@link Call} object containing the created {@link FountainDto} with the continuous use device associated.
+     */
+    @POST("fountains/{id}/device/{id}")
     Call<FountainDto> addContinuousUseDeviceToFountain(@Path("id")int fountainId, @Path("id") int deviceId);
 
     /**
@@ -57,6 +63,6 @@ public interface IFountainService {
      * @param id The unique identifier of the fountain to be deleted.
      * @return a {@link Call} object containing the deleted {@link FountainDto}, if successful.
      */
-    @DELETE("/{id}")
+    @DELETE("fountains/{id}")
     Call<Boolean> deleteFountain(@Path("id") int id);
 }

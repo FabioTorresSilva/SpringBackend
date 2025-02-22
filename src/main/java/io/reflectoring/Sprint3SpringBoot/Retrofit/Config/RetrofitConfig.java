@@ -1,9 +1,16 @@
 package io.reflectoring.Sprint3SpringBoot.Retrofit.Config;
 
+/*
+import io.reflectoring.Sprint3SpringBoot.Retrofit.Controllers.TourController;
+*/
 import io.reflectoring.Sprint3SpringBoot.Retrofit.IService.*;
+/*
+import io.reflectoring.Sprint3SpringBoot.Retrofit.Service.TourService;
+*/
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
@@ -17,6 +24,7 @@ public class RetrofitConfig {
     private static final String BASE_URL_CONTINUOUSUSEDEVICE = "http://localhost:5269/api/continuoususedevices/";
     private static final String BASE_URL_FOUNTAIN = "http://localhost:5269/api/";
     private static final String BASE_URL_WATERANALYSIS = "http://localhost:5269/api/wateranalysis/";
+
 
     /**
      * Creates and configures a Retrofit client for interacting with the device API.
@@ -73,4 +81,13 @@ public class RetrofitConfig {
                 .build();
         return retrofit.create(IWaterAnalysisService.class);
     }
+
+   /* @Bean
+    public TourController tourApiClient() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://tour-pedia.org")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(TourController.class);
+    }*/
 }

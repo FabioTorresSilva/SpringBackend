@@ -17,7 +17,7 @@ public interface IFountainService {
      *
      * @return a {@link Call} object containing a list of {@link FountainDto} representing all fountains.
      */
-    @GET("fountains")
+    @GET()
     Call<List<FountainDto>> getAllFountains();
 
     /**

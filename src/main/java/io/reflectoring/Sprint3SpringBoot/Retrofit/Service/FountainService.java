@@ -40,7 +40,7 @@ public class FountainService {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                throw new RetrofitException("Error fetching fountains: " + response.code());
+                throw new RetrofitException("Error fetching fountains " + response.code());
             }
         } catch (IOException e) {
             throw new RetrofitException("Error retrieving fountains" + e);

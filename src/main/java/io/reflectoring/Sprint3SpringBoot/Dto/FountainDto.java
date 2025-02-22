@@ -40,12 +40,13 @@ public class FountainDto {
     public boolean isDrinkable;
 
     /**
+     * The geographical latitude of the fountain.
+     */
+    public double latitude;
+
+    /**
      * The geographical longitude of the fountain.
      */
     public double longitude;
 
-    /**
-     * The geographical latitude of the fountain.
-     */
-    public double latitude;
 }

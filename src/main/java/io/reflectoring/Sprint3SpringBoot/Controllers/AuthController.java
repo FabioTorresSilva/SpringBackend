@@ -41,7 +41,8 @@ public class AuthController {
                 )
         );
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return new SigninDto(user.getRole(),jwtUtils.generateToken(userDetails.getUsername()));
+        User us = userRepository.findUserByEmail(user.getEmail());
+        return new SigninDto(us.getId(), us.getRole(),jwtUtils.generateToken(userDetails.getUsername()));
     }
     @PostMapping("/signup")
     public String registerUser(@RequestBody User user) {

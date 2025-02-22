@@ -62,6 +62,16 @@ public class FountainController {
         }
     }
 
+    @PostMapping("/{fountainId}/device/{deviceId}")
+    public ResponseEntity<FountainDto> addContinuousUseDeviceToFountain(@PathVariable int fountainId, @PathVariable int deviceId) {
+        try{
+            FountainDto addedContinuousDevice = fountainService.addContinuousUseDeviceToFountain(fountainId, deviceId);
+            return new ResponseEntity<>(addedContinuousDevice, HttpStatus.CREATED);
+        }catch (RetrofitException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<FountainDto> updateFountain(@RequestBody FountainDto fountain, @PathVariable("id") int fountainId) {
         if (fountainId <= 0) {

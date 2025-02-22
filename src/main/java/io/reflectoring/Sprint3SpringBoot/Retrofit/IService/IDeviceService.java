@@ -17,7 +17,7 @@ public interface IDeviceService {
      *
      * @return a {@link Call} object containing a list of {@link DeviceDto} representing all devices.
      */
-    @GET()
+    @GET("devices")
     Call<List<DeviceDto>> getAllDevices();
 
     /**
@@ -26,7 +26,7 @@ public interface IDeviceService {
      * @param id The unique identifier of the device.
      * @return a {@link Call} object containing a {@link DeviceDto} representing the requested device.
      */
-    @GET("/{id}")
+    @GET("devices/{id}")
     Call<DeviceDto> getDeviceById(@Path("id") int id);
 
     /**
@@ -36,7 +36,7 @@ public interface IDeviceService {
      * @param device A {@link DeviceDto} object containing the updated device data.
      * @return a {@link Call} object containing the updated {@link DeviceDto}.
      */
-    @PUT("/{id}")
+    @PUT("devices/{id}")
     Call<DeviceDto> updateDevice(@Path("id") int id, @Body DeviceDto device);
 
     /**
@@ -45,6 +45,6 @@ public interface IDeviceService {
      * @param device A {@link DeviceDto} object containing the data for the new device.
      * @return a {@link Call} object containing the created {@link DeviceDto}.
      */
-    @POST()
+    @POST("devices")
     Call<DeviceDto> createDevice(@Body DeviceDto device);
 }

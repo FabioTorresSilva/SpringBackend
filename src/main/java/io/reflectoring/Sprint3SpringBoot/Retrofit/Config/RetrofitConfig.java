@@ -20,10 +20,10 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 @Configuration
 public class RetrofitConfig {
 
-    private static final String BASE_URL_DEVICE = "http://localhost:5269/api/devices/";
-    private static final String BASE_URL_CONTINUOUSUSEDEVICE = "http://localhost:5269/api/continuoususedevices/";
+    private static final String BASE_URL_DEVICE = "http://localhost:5269/api/";
+    private static final String BASE_URL_CONTINUOUSUSEDEVICE = "http://localhost:5269/api/";
     private static final String BASE_URL_FOUNTAIN = "http://localhost:5269/api/";
-    private static final String BASE_URL_WATERANALYSIS = "http://localhost:5269/api/wateranalysis/";
+    private static final String BASE_URL_WATERANALYSIS = "http://localhost:5269/api/";
 
 
     /**

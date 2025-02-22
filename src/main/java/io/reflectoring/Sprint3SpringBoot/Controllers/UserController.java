@@ -126,6 +126,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/favorites/{id}/{i}")
+    public ResponseEntity<?> getXFavourites(@PathVariable int id, @PathVariable int i){
+        try{
+            return ResponseEntity.ok(userService.getXFavourites(id, i));
+
+        } catch (UserNotFoundException | RoleNotAcepted | ParamException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
     /**
      * Retrieves a tester's water analyses.
      *

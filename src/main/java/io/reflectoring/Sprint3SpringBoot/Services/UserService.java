@@ -265,4 +265,29 @@ public class UserService implements IUserService {
 
         return usersRole;
     }
+
+    @Override
+    public List<FountainDto> getXFavourites(int id, int i)
+    {
+        List<FountainDto> listFavourites = new ArrayList<>();
+
+        User user = getUserById(id);
+
+        if(i <= 0)
+            throw new ParamException("Param invalid.");
+
+        if (user.getRole() != Role.Client)
+            throw new RoleNotAcepted("User with ID " + id + " is not a client.");
+
+        int j = 0;
+        for (FountainDto f : user.getFavourites())
+        {
+            listFavourites.add(f);
+            j++;
+            if (j == i)
+                break;
+        }
+
+        return listFavourites;
+    }
 }

@@ -49,4 +49,7 @@ public interface IUserService {
     List<WaterAnalysisDto> getTesterWaterAnalysis(int id);
 
     List<User> getAllUsersByRole(Role role);
+
+    List<FountainDto> getXFavourites(int id, int i);
+
 }

@@ -97,7 +97,6 @@ public class UserService implements IUserService {
         } catch (Exception e) {
             throw new RepositoryException("Error creating user in repository");
         }
-
         return user;
     }
 }

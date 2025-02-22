@@ -72,7 +72,7 @@ public class UserService implements IUserService {
         if (id != user.getId())
             throw new ParamException("Ids do not match.");
 
-        if (userRepository.findUserByEmail(user.email) != null)
+        if (userRepository.findUserByEmail(user.getEmail()) != null)
             throw new ParamException("Email already exists");
 
         User updateUser = getUserById(id);

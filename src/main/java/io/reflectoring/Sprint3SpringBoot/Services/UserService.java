@@ -266,6 +266,15 @@ public class UserService implements IUserService {
         return usersRole;
     }
 
+    /**
+     * Retrieves a list of the user's favorite fountains, up to a specified limit.
+     *
+     * @param id The unique identifier of the user whose favorites are being retrieved.
+     * @param i  The maximum number of favorite fountains to return.
+     * @return A list of {@link FountainDto} objects representing the user's favorite fountains.
+     * @throws ParamException    If the provided limit {@code i} is less than or equal to 0.
+     * @throws RoleNotAcepted    If the user is not a client.
+     */
     @Override
     public List<FountainDto> getXFavourites(int id, int i)
     {

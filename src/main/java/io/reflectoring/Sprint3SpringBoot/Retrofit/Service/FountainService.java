@@ -1,5 +1,6 @@
 package io.reflectoring.Sprint3SpringBoot.Retrofit.Service;
 
+import io.reflectoring.Sprint3SpringBoot.Dto.ContinuousUseDeviceDto;
 import io.reflectoring.Sprint3SpringBoot.Dto.FountainDto;
 import io.reflectoring.Sprint3SpringBoot.Exceptions.RetrofitException;
 import io.reflectoring.Sprint3SpringBoot.Retrofit.IService.IFountainService;
@@ -40,7 +41,7 @@ public class FountainService {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                throw new RetrofitException("Error fetching fountains: " + response.code());
+                throw new RetrofitException("Error fetching fountains " + response.code());
             }
         } catch (IOException e) {
             throw new RetrofitException("Error retrieving fountains" + e);
@@ -105,6 +106,27 @@ public class FountainService {
         }
     }
 
+    public FountainDto addContinuousUseDeviceToFountain(int fountainId, int deviceId) {
+        if (fountainId <= 0 || deviceId <= 0) {
+            throw new IllegalArgumentException("The IDs must be higher than zero.");
+        }
+
+        try {
+            Response<FountainDto> response = fountainService.addContinuousUseDeviceToFountain(fountainId, deviceId).execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RetrofitException("Error associating device: " + response.code());
+            }
+        } catch (IOException e) {
+            throw new RetrofitException("Error associating device: " + e.getMessage());
+        }
+    }
+
+//    public FountainDto addContinuousUseDeviceToFountain(int fountainId, int deviceId) {
+//
+//    }
+
     /**
      * Deletes a specific fountain by its unique identifier.
      *
@@ -123,4 +145,6 @@ public class FountainService {
             throw new RetrofitException("Error deleting fountain" + e);
         }
     }
+
+
 }

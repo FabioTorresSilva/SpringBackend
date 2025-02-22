@@ -17,7 +17,7 @@ public interface IWaterAnalysisService {
      *
      * @return a {@link Call} object containing a list of {@link WaterAnalysisDto} representing all water analyses.
      */
-    @GET()
+    @GET("wateranalysis")
     Call<List<WaterAnalysisDto>> getAllWaterAnalyses();
 
     /**
@@ -26,7 +26,7 @@ public interface IWaterAnalysisService {
      * @param id The unique identifier of the water analysis.
      * @return a {@link Call} object containing a {@link WaterAnalysisDto} representing the requested water analysis.
      */
-    @GET("/{id}")
+    @GET("wateranalysis/{id}")
     Call<WaterAnalysisDto> getWaterAnalysisById(@Path("id") int id);
 
     /**
@@ -36,7 +36,7 @@ public interface IWaterAnalysisService {
      * @param waterAnalysis A {@link WaterAnalysisDto} object containing the updated water analysis data.
      * @return a {@link Call} object containing the updated {@link WaterAnalysisDto}.
      */
-    @PUT("/{id}")
+    @PUT("wateranalysis/{id}")
     Call<WaterAnalysisDto> updateWaterAnalysis(@Path("id") int id, @Body WaterAnalysisDto waterAnalysis);
 
     /**
@@ -45,6 +45,6 @@ public interface IWaterAnalysisService {
      * @param waterAnalysis A {@link WaterAnalysisDto} object containing the data for the new water analysis.
      * @return a {@link Call} object containing the created {@link WaterAnalysisDto}.
      */
-    @POST()
+    @POST("wateranalysis")
     Call<WaterAnalysisDto> createWaterAnalysis(@Body WaterAnalysisDto waterAnalysis);
 }

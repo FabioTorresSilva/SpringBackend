@@ -183,6 +183,9 @@ public class UserController {
     public ResponseEntity<?> addFavourite(@PathVariable int id, @PathVariable int fountainId) {
         try {
             FountainDto fountain = fountainService.getFountainById(fountainId);
+            if (fountain == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fountain not found");
+            }
             return ResponseEntity.ok(userService.addFavourite(id, fountain));
         } catch (UserNotFoundException | RoleNotAcepted | RetrofitException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -203,6 +206,9 @@ public class UserController {
     public ResponseEntity<?> removeFavourite(@PathVariable int id, @PathVariable int fountainId) {
         try {
             FountainDto fountain = fountainService.getFountainById(fountainId);
+            if (fountain == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fountain not found");
+            }
             return ResponseEntity.ok(userService.removeFavourite(id, fountain));
         } catch (UserNotFoundException | RoleNotAcepted | RetrofitException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -223,6 +229,9 @@ public class UserController {
     public ResponseEntity<?> addWaterAnalysis(@PathVariable int id, @PathVariable int waterAnalysisId) {
         try {
             WaterAnalysisDto waterAnalysis = waterAnalysisService.getWaterAnalysisById(waterAnalysisId);
+            if (waterAnalysis == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Water Analysis not found");
+            }
             return ResponseEntity.ok(userService.addWaterAnalysis(id, waterAnalysis));
         } catch (UserNotFoundException | RoleNotAcepted | RetrofitException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

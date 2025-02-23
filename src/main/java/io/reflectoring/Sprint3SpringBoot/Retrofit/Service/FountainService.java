@@ -175,5 +175,28 @@ public class FountainService {
         }
     }
 
-
+    /**
+     * Searches for fountains using the specified query string.
+     * <p>
+     * This method makes a synchronous Retrofit call to the fountain service to retrieve a list of fountains that match the provided query.
+     * If the HTTP response is successful, it returns the list of {@link FountainDto} objects.
+     * If the response is unsuccessful or if an I/O error occurs, a {@link RetrofitException} is thrown with an appropriate error message.
+     * </p>
+     *
+     * @param query the search term used to filter the fountains.
+     * @return a {@link List} of {@link FountainDto} objects that match the search criteria.
+     * @throws RetrofitException if the HTTP response is unsuccessful or an I/O error occurs during the execution of the request.
+     */
+    public List<FountainDto> searchFountains(String query) {
+        try {
+            Response<List<FountainDto>> response = fountainService.searchFountains(query).execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RetrofitException("Erro ao pesquisar fontes: " + response.code());
+            }
+        } catch (IOException e) {
+            throw new RetrofitException("Erro ao pesquisar fontes: " + e.getMessage());
+        }
+    }
 }

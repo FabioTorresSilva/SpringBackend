@@ -78,4 +78,17 @@ public interface IFountainService {
      */
     @DELETE("fountains/{fountainId}/device")
     Call<FountainDto> deleteDeviceFromFountain(@Path("fountainId") int fountainId);
+
+    /**
+     * Searches for fountains based on the provided query.
+     * <p>
+     * This method sends a GET request to retrieve a list of fountains that match the search query.
+     * The query parameter is passed as a query string, and the server returns a list of matching fountain details.
+     * </p>
+     *
+     * @param query the search term used to filter the fountains.
+     * @return a {@link Call} object containing a list of {@link FountainDto} representing the fountains that match the search query.
+     */
+    @GET("fountains/search")
+    Call<List<FountainDto>> searchFountains(@Query("q") String query);
 }

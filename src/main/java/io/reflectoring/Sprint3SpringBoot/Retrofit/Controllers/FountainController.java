@@ -125,4 +125,32 @@ public class FountainController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    /**
+     * Searches for fountains based on the provided query parameter.
+     * <p>
+     * This endpoint handles GET requests to "/search". It accepts a query parameter "q" used for filtering fountains.
+     * The method invokes the fountain service to retrieve a list of matching fountains. If no fountains match the query,
+     * it returns an HTTP 204 (No Content) response. Otherwise, it responds with an HTTP 200 (OK) status and includes the
+     * list of fountains along with the "Access-Control-Allow-Origin" header set to "http://localhost:4200" for CORS support.
+     * In case of a RetrofitException, an HTTP 500 (Internal Server Error) is returned along with an empty list.
+     * </p>
+     *
+     * @param query the search term used to filter fountains.
+     * @return a {@link ResponseEntity} containing the list of {@link FountainDto} matching the search criteria or an appropriate HTTP status code.
+     */
+    @GetMapping("/search")
+    public ResponseEntity<List<FountainDto>> searchFountains(@RequestParam("q") String query) {
+        try {
+            List<FountainDto> fountains = fountainService.searchFountains(query);
+            return fountains.isEmpty()
+                    ? ResponseEntity.noContent().build()
+                    : ResponseEntity.ok()
+                    .header("Access-Control-Allow-Origin", "http://localhost:4200")
+                    .body(fountains);
+        } catch (RetrofitException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.emptyList());
+        }
+    }
 }

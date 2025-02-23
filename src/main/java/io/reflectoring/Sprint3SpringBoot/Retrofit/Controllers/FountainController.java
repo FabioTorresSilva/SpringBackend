@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/fountains")
+@CrossOrigin(origins = "http://localhost:4200")
 public class FountainController {
 
     private final FountainService fountainService;
@@ -25,10 +26,16 @@ public class FountainController {
     @GetMapping
     public ResponseEntity<List<FountainDto>> getAllFountains() {
         try {
+            System.out.println("FONTANARIOS");
             List<FountainDto> fountains = fountainService.getAllFountains();
-            return fountains.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(fountains);
+            return fountains.isEmpty()
+                    ? ResponseEntity.noContent().build()
+                    : ResponseEntity.ok()
+                    .header("Access-Control-Allow-Origin", "http://localhost:4200")
+                    .body(fountains);
         } catch (RetrofitException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.emptyList());
         }
     }
 
@@ -47,10 +54,10 @@ public class FountainController {
 
     @PostMapping
     public ResponseEntity<FountainDto> createFountain(@RequestBody FountainDto fountain) {
-        try{
+        try {
             FountainDto fountainCreated = fountainService.createFountain(fountain);
             return new ResponseEntity<>(fountainCreated, HttpStatus.CREATED);
-        }catch (RetrofitException e){
+        } catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -70,7 +77,7 @@ public class FountainController {
         if (fountainId <= 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        try{
+        try {
             FountainDto updatedFountain = fountainService.updateFountain(fountainId, fountain);
             return new ResponseEntity<>(updatedFountain, HttpStatus.OK);
         } catch (RetrofitException e) {
@@ -82,10 +89,11 @@ public class FountainController {
     public ResponseEntity<String> deleteFountain(@PathVariable("id") int fountainId) {
         if (fountainId <= 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }try{
+        }
+        try {
             Boolean deleted = fountainService.deleteFountain(fountainId);
             return deleted ? ResponseEntity.ok().build() : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }catch (RetrofitException e){
+        } catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

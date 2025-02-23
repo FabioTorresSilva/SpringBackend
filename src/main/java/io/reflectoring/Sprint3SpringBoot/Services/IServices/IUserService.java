@@ -52,4 +52,6 @@ public interface IUserService {
 
     List<FountainDto> getXFavourites(int id, int i);
 
+    boolean isFountainFavorite(int idUser, int idFountain);
+
 }

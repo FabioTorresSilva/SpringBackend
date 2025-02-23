@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -226,5 +227,16 @@ public class UserController {
         } catch (UserNotFoundException | RoleNotAcepted | RetrofitException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/user/{idUser}/fountain/{idFountain}")
+    public ResponseEntity<?> isFountainFavorite(@PathVariable int idUser, @PathVariable int idFountain)
+    {
+        try{
+            return ResponseEntity.ok(userService.isFountainFavorite(idUser, idFountain));
+        }catch (RoleNotAcepted | ParamException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
     }
 }

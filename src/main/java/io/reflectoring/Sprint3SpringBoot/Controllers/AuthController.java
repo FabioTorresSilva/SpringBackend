@@ -1,9 +1,11 @@
 package io.reflectoring.Sprint3SpringBoot.Controllers;
 
+import io.reflectoring.Sprint3SpringBoot.Dto.SigninDto;
 import io.reflectoring.Sprint3SpringBoot.Models.User;
 import io.reflectoring.Sprint3SpringBoot.JWT.JwtUtil;
 import io.reflectoring.Sprint3SpringBoot.Repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public String authenticateUser(@RequestBody User user) {
+    public SigninDto authenticateUser(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getEmail(),
@@ -41,20 +43,22 @@ public class AuthController {
                 )
         );
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return jwtUtils.generateToken(userDetails.getUsername());
+        User us = userRepository.findUserByEmail(user.getEmail());
+        return new SigninDto(us.getId(), us.getRole(),jwtUtils.generateToken(userDetails.getUsername()));
     }
     @PostMapping("/signup")
-    public String registerUser(@RequestBody User user) {
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
-            return "Error: Username is already taken!";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Email is already taken!");
         }
         // Create new user's account
         User newUser = new User(
                 user.getName(),
                 user.getEmail(),
-                encoder.encode(user.getPassword())
+                encoder.encode(user.getPassword()),
+                user.getRole()
         );
         userRepository.save(newUser);
-        return "User registered successfully!";
+        return ResponseEntity.status(HttpStatus.OK).body("User registered successfully!");
     }
 }

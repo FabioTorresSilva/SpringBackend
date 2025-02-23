@@ -8,8 +8,6 @@ import lombok.Setter;
  * Data Transfer Object (DTO) for representing a water analysis report.
  * This DTO is used to transfer water analysis data between different application layers.
  */
-@Getter
-@Setter
 public class WaterAnalysisDto {
 
     /**
@@ -36,4 +34,36 @@ public class WaterAnalysisDto {
      * The unique identifier of the device used for the water analysis.
      */
     public int deviceId;
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public int getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(int deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public int getFountainId() {
+        return fountainId;
+    }
+
+    public void setFountainId(int fountainId) {
+        this.fountainId = fountainId;
+    }
+
+    public double getRadonConcentration() {
+        return radonConcentration;
+    }
+
+    public void setRadonConcentration(double radonConcentration) {
+        this.radonConcentration = radonConcentration;
+    }
 }

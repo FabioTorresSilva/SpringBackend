@@ -146,5 +146,34 @@ public class FountainService {
         }
     }
 
+    /**
+     * Removes the device associated with the specified fountain.
+     * <p>
+     * This method validates that the given fountain ID is greater than zero. It then initiates a Retrofit call to delete the device
+     * linked to the fountain identified by the fountain ID. If the call is successful, the method returns the updated fountain details.
+     * In case of an unsuccessful response or an I/O error during the operation, a RetrofitException is thrown with an appropriate error message.
+     * </p>
+     *
+     * @param fountainId the unique identifier of the fountain from which the device should be removed; must be greater than zero.
+     * @return the updated {@link FountainDto} reflecting the fountain after the device has been removed.
+     * @throws IllegalArgumentException if the fountainId is less than or equal to zero.
+     * @throws RetrofitException if the deletion operation fails due to an unsuccessful response or an I/O error.
+     */
+    public FountainDto deleteDeviceFromFountain(int fountainId) {
+        if (fountainId <= 0) {
+            throw new IllegalArgumentException("The fountain ID must be greater than zero.");
+        }
+        try {
+            Response<FountainDto> response = fountainService.deleteDeviceFromFountain(fountainId).execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RetrofitException("Error removing device from fountain: " + response.code());
+            }
+        } catch (IOException e) {
+            throw new RetrofitException("Error removing device from fountain: " + e.getMessage());
+        }
+    }
+
 
 }

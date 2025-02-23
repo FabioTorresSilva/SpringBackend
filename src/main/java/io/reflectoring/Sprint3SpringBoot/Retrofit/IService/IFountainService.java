@@ -65,4 +65,17 @@ public interface IFountainService {
      */
     @DELETE("fountains/{id}")
     Call<Boolean> deleteFountain(@Path("id") int id);
+
+    /**
+     * Deletes the device associated with a specified fountain.
+     * <p>
+     * This method removes the device linked to the fountain identified by the provided unique fountain identifier.
+     * Upon successful deletion, the server returns the updated details of the fountain.
+     * </p>
+     *
+     * @param fountainId the unique identifier of the fountain from which the device will be removed.
+     * @return a {@link Call} object containing the updated {@link FountainDto} after the device removal.
+     */
+    @DELETE("fountains/{fountainId}/device")
+    Call<FountainDto> deleteDeviceFromFountain(@Path("fountainId") int fountainId);
 }

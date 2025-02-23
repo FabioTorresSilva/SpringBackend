@@ -8,8 +8,6 @@ import lombok.Setter;
  * Data Transfer Object (DTO) for representing a fountain.
  * This DTO is used to transfer fountain-related data between different application layers.
  */
-@Getter
-@Setter
 public class FountainDto {
 
     /**
@@ -49,4 +47,59 @@ public class FountainDto {
      */
     public double longitude;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public SusceptibilityIndex getSusceptibilityIndex() {
+        return susceptibilityIndex;
+    }
+
+    public void setSusceptibilityIndex(SusceptibilityIndex susceptibilityIndex) {
+        this.susceptibilityIndex = susceptibilityIndex;
+    }
+
+    public int getContinuousUseDeviceId() {
+        return continuousUseDeviceId;
+    }
+
+    public void setContinuousUseDeviceId(int continuousUseDeviceId) {
+        this.continuousUseDeviceId = continuousUseDeviceId;
+    }
+
+    public boolean isDrinkable() {
+        return isDrinkable;
+    }
+
+    public void setDrinkable(boolean drinkable) {
+        isDrinkable = drinkable;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 }

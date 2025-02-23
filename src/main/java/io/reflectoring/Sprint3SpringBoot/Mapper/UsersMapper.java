@@ -10,14 +10,14 @@ public class UsersMapper {
     public UsersMapper(){}
 
     public UserDto UserToDto(User user){
-        return new UserDto(user.name, user.email, user.role);
+        return new UserDto(user.getName(), user.getEmail(), user.getRole());
     }
 
-    public UserDto ClientToDto(Client user){
-        return new UserDto(user.name, user.email, user.role);
-    }
+    //public UserDto ClientToDto(Client user){
+        //return new UserDto(user.name, user.email, user.role);
+    //}
 
-    public UserDto TesterToDto(Tester user){
-        return new UserDto(user.name, user.email, user.role);
-    }
+    //public UserDto TesterToDto(Tester user){
+        //return new UserDto(user.name, user.email, user.role);
+    //}
 }

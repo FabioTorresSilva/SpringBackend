@@ -26,12 +26,10 @@ public class FountainController {
     @GetMapping
     public ResponseEntity<List<FountainDto>> getAllFountains() {
         try {
-            System.out.println("FONTANARIOS");
             List<FountainDto> fountains = fountainService.getAllFountains();
             return fountains.isEmpty()
                     ? ResponseEntity.noContent().build()
                     : ResponseEntity.ok()
-                    .header("Access-Control-Allow-Origin", "http://localhost:4200")
                     .body(fountains);
         } catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

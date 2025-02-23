@@ -14,15 +14,6 @@ public class Sprint3SpringBootApplication {
         SpringApplication.run(Sprint3SpringBootApplication.class, args);
     }
 
-    /*@Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(@NotNull CorsRegistry registry) {
-                registry.addMapping("/api/fountains").allowedOrigins("http://localhost:4200");
-            }
-        };
-    }*/
 }
 
 

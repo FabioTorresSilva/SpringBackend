@@ -5,6 +5,7 @@ import io.reflectoring.Sprint3SpringBoot.Dto.WaterAnalysisDto;
 import io.reflectoring.Sprint3SpringBoot.Enums.Role;
 import io.reflectoring.Sprint3SpringBoot.Models.User;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -38,13 +39,13 @@ public interface IUserService {
      */
     User createUser(User user);
 
-    FountainDto addFavourite(int id, FountainDto fountainDto);
+    FountainDto addFavourite(int id, int fountainDto);
 
-    FountainDto removeFavourite(int id, FountainDto fountainDto);
+    FountainDto removeFavourite(int id, Integer fountainDto);
 
-    List<FountainDto> getUserFavourites(int id);
+    List<FountainDto> getUserFavourites(int id) throws IOException;
 
-    WaterAnalysisDto addWaterAnalysis(int id, WaterAnalysisDto waterAnalysisDto);
+    WaterAnalysisDto addWaterAnalysis(int id, int waterAnalysisDto);
 
     List<WaterAnalysisDto> getTesterWaterAnalysis(int id);
 

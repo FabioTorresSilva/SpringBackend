@@ -91,7 +91,7 @@ public class User {
      * Default constructor that initializes the user with the {@code Role.Manager}.
      */
     public User() {
-        this.role = Role.Manager;
+        this.role = Role.Client;
     }
 
     /**

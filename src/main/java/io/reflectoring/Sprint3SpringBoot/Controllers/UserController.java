@@ -187,7 +187,7 @@ public class UserController {
             if (fountain == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fountain not found");
             }
-            return ResponseEntity.ok(userService.addFavourite(id, fountain));
+            return ResponseEntity.ok(userService.addFavourite(id, fountainId));
         } catch (UserNotFoundException | RoleNotAcepted | RetrofitException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -210,7 +210,7 @@ public class UserController {
             if (fountain == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fountain not found");
             }
-            return ResponseEntity.ok(userService.removeFavourite(id, fountain));
+            return ResponseEntity.ok(userService.removeFavourite(id, fountainId));
         } catch (UserNotFoundException | RoleNotAcepted | RetrofitException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -233,7 +233,7 @@ public class UserController {
             if (waterAnalysis == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Water Analysis not found");
             }
-            return ResponseEntity.ok(userService.addWaterAnalysis(id, waterAnalysis));
+            return ResponseEntity.ok(userService.addWaterAnalysis(id, waterAnalysisId));
         } catch (UserNotFoundException | RoleNotAcepted | RetrofitException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

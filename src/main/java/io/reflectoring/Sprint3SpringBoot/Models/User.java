@@ -63,14 +63,18 @@ public class User {
     /**
      * List of favorite fountains (not persisted in the database).
      */
-    @Transient
-    private ArrayList<FountainDto> favourites;
+    @ElementCollection
+    @CollectionTable(name = "user_favourites", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "fountain_id")
+    private List<Integer> favourites;
 
     /**
      * List of water analyses associated with the user (not persisted in the database).
      */
-    @Transient
-    private List<WaterAnalysisDto> waterAnalysis;
+    @ElementCollection
+    @CollectionTable(name = "user_water_analysis", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "analysis_id")
+    private List<Integer> waterAnalysis;
 
     /**
      * Constructs a new {@code User} with the specified name, email, password, and role.
@@ -85,6 +89,8 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.favourites = new ArrayList<>();
+        this.waterAnalysis = new ArrayList<>();
     }
 
     /**
@@ -92,6 +98,8 @@ public class User {
      */
     public User() {
         this.role = Role.Client;
+        this.favourites = new ArrayList<>();
+        this.waterAnalysis = new ArrayList<>();
     }
 
     /**
@@ -184,39 +192,19 @@ public class User {
         this.role = role;
     }
 
-    /**
-     * Gets the user's favorite fountains.
-     *
-     * @return a list of favorite fountains
-     */
-    public ArrayList<FountainDto> getFavourites() {
+    public List<Integer> getFavourites() {
         return favourites;
     }
 
-    /**
-     * Sets the user's favorite fountains.
-     *
-     * @param favourites the list of new favorite fountains
-     */
-    public void setFavourites(ArrayList<FountainDto> favourites) {
+    public void setFavourites(List<Integer> favourites) {
         this.favourites = favourites;
     }
 
-    /**
-     * Gets the list of water analyses associated with the user.
-     *
-     * @return a list of water analyses
-     */
-    public List<WaterAnalysisDto> getWaterAnalysis() {
+    public List<Integer> getWaterAnalysis() {
         return waterAnalysis;
     }
 
-    /**
-     * Sets the list of water analyses associated with the user.
-     *
-     * @param waterAnalysis the new list of water analyses
-     */
-    public void setWaterAnalysis(List<WaterAnalysisDto> waterAnalysis) {
+    public void setWaterAnalysis(List<Integer> waterAnalysis) {
         this.waterAnalysis = waterAnalysis;
     }
 }

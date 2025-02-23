@@ -7,6 +7,8 @@ import io.reflectoring.Sprint3SpringBoot.Exceptions.*;
 import io.reflectoring.Sprint3SpringBoot.Models.User;
 import io.reflectoring.Sprint3SpringBoot.Repositories.UserRepository;
 import io.reflectoring.Sprint3SpringBoot.Retrofit.IService.IFountainService;
+import io.reflectoring.Sprint3SpringBoot.Retrofit.Service.FountainService;
+import io.reflectoring.Sprint3SpringBoot.Retrofit.Service.WaterAnalysisService;
 import io.reflectoring.Sprint3SpringBoot.Services.IServices.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,9 @@ public class UserService implements IUserService {
 
     private final UserRepository userRepository;
 
-    private final IFountainService fountainService;
+    private final FountainService fountainService;
+
+    private final WaterAnalysisService waterAnalysisService;
 
     /**
      * Constructor for dependency injection.
@@ -34,9 +38,10 @@ public class UserService implements IUserService {
      * @param userRepository The repository for user operations.
      */
     @Autowired
-    public UserService(UserRepository userRepository, IFountainService fountainService) {
+    public UserService(UserRepository userRepository, FountainService fountainService, WaterAnalysisService waterAnalysisService) {
         this.userRepository = userRepository;
         this.fountainService = fountainService;
+        this.waterAnalysisService = waterAnalysisService;
     }
 
     /**
@@ -125,7 +130,12 @@ public class UserService implements IUserService {
         if (user.getRole() != Role.Client)
             throw new RoleNotAcepted("User with ID " + id + " is not a client.");
 
-        return user.getFavourites();
+        List<FountainDto> fountains = new ArrayList<>();
+        for (Integer i : user.getFavourites()) {
+            FountainDto fountain = fountainService.getFountainById(i);
+            fountains.add(fountain);
+        }
+        return fountains;
     }
 
     /**
@@ -139,10 +149,8 @@ public class UserService implements IUserService {
      * @throws ParamException        If the provided fountain is null.
      */
     @Override
-    public FountainDto addFavourite(int id, FountainDto fountainDto) {
+    public FountainDto addFavourite(int id, int fountainDto) {
 
-        if (fountainDto == null)
-            throw new ParamException("Fountain does not exist");
 
         Optional<User> user = userRepository.findById(id);
 
@@ -155,8 +163,9 @@ public class UserService implements IUserService {
 
         User usr = user.get();
         usr.getFavourites().add(fountainDto);
+        userRepository.save(usr);
 
-        return fountainDto;
+        return fountainService.getFountainById(fountainDto);
     }
 
     /**
@@ -170,9 +179,7 @@ public class UserService implements IUserService {
      * @throws ParamException        If the provided fountain is null.
      */
     @Override
-    public FountainDto removeFavourite(int id, FountainDto fountainDto) {
-        if (fountainDto == null)
-            throw new ParamException("Fountain does not exist");
+    public FountainDto removeFavourite(int id, Integer fountainDto) {
 
         Optional<User> user = userRepository.findById(id);
 
@@ -185,8 +192,10 @@ public class UserService implements IUserService {
 
         User usr = user.get();
         usr.getFavourites().remove(fountainDto);
+        userRepository.save(usr);
 
-        return fountainDto;
+        return fountainService.getFountainById(fountainDto);
+
     }
 
     /**
@@ -204,7 +213,12 @@ public class UserService implements IUserService {
         if (user.getRole() != Role.Tester)
             throw new RoleNotAcepted("User with ID " + id + " is not a tester.");
 
-        return user.getWaterAnalysis();
+        List<WaterAnalysisDto> waterAnalysis = new ArrayList<>();
+        for (Integer i : user.getFavourites()) {
+            WaterAnalysisDto waterAnalysisDto = waterAnalysisService.getWaterAnalysisById(i);
+            waterAnalysis.add(waterAnalysisDto);
+        }
+        return waterAnalysis;
     }
 
     /**
@@ -218,11 +232,7 @@ public class UserService implements IUserService {
      * @throws ParamException        If the provided water analysis is null.
      */
     @Override
-    public WaterAnalysisDto addWaterAnalysis(int id, WaterAnalysisDto waterAnalysisDto) {
-
-        if (waterAnalysisDto == null) {
-            throw new ParamException("Water analysis does not exist.");
-        }
+    public WaterAnalysisDto addWaterAnalysis(int id, int waterAnalysisDto) {
 
         Optional<User> user = userRepository.findById(id);
 
@@ -235,8 +245,9 @@ public class UserService implements IUserService {
 
         User usr = user.get();
         usr.getWaterAnalysis().add(waterAnalysisDto);
+        userRepository.save(usr);
 
-        return waterAnalysisDto;
+        return waterAnalysisService.getWaterAnalysisById(waterAnalysisDto);
     }
 
     /**
@@ -291,8 +302,9 @@ public class UserService implements IUserService {
             throw new RoleNotAcepted("User with ID " + id + " is not a client.");
 
         int j = 0;
-        for (FountainDto f : user.getFavourites()) {
-            listFavourites.add(f);
+        for (Integer f : user.getFavourites()) {
+            FountainDto fountain = fountainService.getFountainById(f);
+            listFavourites.add(fountain);
             j++;
             if (j == i)
                 break;
@@ -309,24 +321,11 @@ public class UserService implements IUserService {
         if (user.getRole() != Role.Client)
             throw new RoleNotAcepted("User with ID " + idUser + " is not a client.");
 
-        try {
-            Response<FountainDto> fountainDto = fountainService.getFountainById(idFountain).execute();
+        FountainDto fountainDto = fountainService.getFountainById(idFountain);
 
-            if ((fountainDto.isSuccessful()))
-                if (fountainDto.body() == null)
-                    throw new ParamException("Fountain does not exist.");
-                else {
-                    throw new RetrofitException("Error fetching fountains " + fountainDto.code());
-                }
-            for (FountainDto f : user.getFavourites()) {
-                if (f.getId() == idFountain)
-                    return true;
-            }
-            return false;
+        if (fountainDto != null)
+                throw new ParamException("Fountain does not exist.");
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        return user.getFavourites().contains(idFountain);
     }
 }

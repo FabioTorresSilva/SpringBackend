@@ -9,11 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class Sprint3SpringBootApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(Sprint3SpringBootApplication.class, args);
     }
-
 }
 
 

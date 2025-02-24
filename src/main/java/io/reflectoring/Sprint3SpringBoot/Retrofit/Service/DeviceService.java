@@ -70,10 +70,13 @@ public class DeviceService {
      */
     public DeviceDto updateDevice(int deviceId, DeviceDto device) {
         try {
+
             Response<DeviceDto> response = deviceService.updateDevice(deviceId, device).execute();
+
             if (response.isSuccessful()) {
                 return response.body();
             } else {
+                System.out.println("2");
                 throw new RetrofitException("Error updating device: " + response.code());
             }
         } catch (IOException e) {

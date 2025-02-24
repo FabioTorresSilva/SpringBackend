@@ -29,7 +29,7 @@ public class FountainDto {
     /**
      * The identifier of the device associated with the fountain.
      */
-    public int continuousUseDeviceId;
+    public Integer continuousUseDeviceId;
 
     /**
      * Indicates whether the water from the fountain is drinkable.

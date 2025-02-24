@@ -3,6 +3,7 @@ package io.reflectoring.Sprint3SpringBoot.Retrofit.Config;
 /*
 import io.reflectoring.Sprint3SpringBoot.Retrofit.Controllers.TourController;
 */
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.reflectoring.Sprint3SpringBoot.Retrofit.IService.*;
 /*
 import io.reflectoring.Sprint3SpringBoot.Retrofit.Service.TourService;
@@ -32,10 +33,10 @@ public class RetrofitConfig {
      * @return an instance of {@link IDeviceService} for API calls.
      */
     @Bean
-    public IDeviceService deviceApiClient() {
+    public IDeviceService deviceApiClient(ObjectMapper objectMapper) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL_DEVICE)
-                .addConverterFactory(JacksonConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build();
         return retrofit.create(IDeviceService.class);
     }
@@ -46,10 +47,10 @@ public class RetrofitConfig {
      * @return an instance of {@link IContinuousUseDeviceService} for API calls.
      */
     @Bean
-    public IContinuousUseDeviceService continuousUseDeviceApiClient() {
+    public IContinuousUseDeviceService continuousUseDeviceApiClient(ObjectMapper objectMapper) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL_CONTINUOUSUSEDEVICE)
-                .addConverterFactory(JacksonConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build();
         return retrofit.create(IContinuousUseDeviceService.class);
     }
@@ -74,10 +75,10 @@ public class RetrofitConfig {
      * @return an instance of {@link IWaterAnalysisService} for API calls.
      */
     @Bean
-    public IWaterAnalysisService waterAnalysisApiClient() {
+    public IWaterAnalysisService waterAnalysisApiClient(ObjectMapper objectMapper) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL_WATERANALYSIS)
-                .addConverterFactory(JacksonConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build();
         return retrofit.create(IWaterAnalysisService.class);
     }

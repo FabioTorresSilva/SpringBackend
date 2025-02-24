@@ -1,6 +1,10 @@
 package io.reflectoring.Sprint3SpringBoot.Dto;
 
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.reflectoring.Sprint3SpringBoot.Retrofit.Config.LocalDateDeserializer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,5 +34,7 @@ public class DeviceDto {
     /**
      * The expiration date of the device, indicating when it should be replaced or serviced.
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     public LocalDate expirationDate;
 }

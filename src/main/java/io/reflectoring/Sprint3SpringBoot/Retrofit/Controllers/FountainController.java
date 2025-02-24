@@ -243,4 +243,26 @@ public class FountainController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    /**
+     * Creates a water analysis record for a specific fountain.
+     *
+     * @param fountainId the unique identifier of the fountain.
+     * @param waterAnalysis a {@link FountainDto} object containing the water analysis data.
+     * @return a {@link ResponseEntity} containing the updated {@link FountainDto} or an appropriate error status.
+     */
+    @PostMapping("/{fountainId}/water-analysis")
+    public ResponseEntity<FountainDto> createWaterAnalysisForFountain(@PathVariable int fountainId, @RequestBody FountainDto waterAnalysis) {
+        if (fountainId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        try {
+            FountainDto createdAnalysis = fountainService.createWaterAnalysisForFountain(fountainId, waterAnalysis);
+            return createdAnalysis != null
+                    ? new ResponseEntity<>(createdAnalysis, HttpStatus.CREATED)
+                    : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (RetrofitException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

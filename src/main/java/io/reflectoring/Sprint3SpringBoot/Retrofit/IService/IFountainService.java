@@ -130,4 +130,15 @@ public interface IFountainService {
      */
     @GET("fountains/{fountainId}/water-analysis")
     Call<FountainDto> getWaterAnalysisForFountain(@Path("fountainId") int fountainId);
+
+    /**
+     * Creates a water analysis record for a specific fountain.
+     *
+     * @param fountainId the unique identifier of the fountain.
+     * @param waterAnalysis a {@link FountainDto} object containing the water analysis data.
+     * @return a {@link Call} object containing the {@link FountainDto} updated with the water analysis.
+     */
+    @POST("fountains/{fountainId}/water-analysis")
+    Call<FountainDto> createWaterAnalysisForFountain(@Path("fountainId") int fountainId, @Body FountainDto waterAnalysis);
+
 }

@@ -291,4 +291,28 @@ public class FountainService {
             throw new RetrofitException("Error getting water analysis: " + e.getMessage());
         }
     }
+
+    /**
+     * Creates a water analysis record for the specified fountain.
+     *
+     * @param fountainId the unique identifier of the fountain.
+     * @param waterAnalysis a {@link FountainDto} object containing the water analysis data.
+     * @return the updated {@link FountainDto} with the new water analysis.
+     * @throws RetrofitException if any error occurs during the API call.
+     */
+    public FountainDto createWaterAnalysisForFountain(int fountainId, FountainDto waterAnalysis) {
+        if (fountainId <= 0) {
+            throw new IllegalArgumentException("The fountain ID must be greater than zero.");
+        }
+        try {
+            Response<FountainDto> response = fountainService.createWaterAnalysisForFountain(fountainId, waterAnalysis).execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RetrofitException("Error creating water analysis: " + response.code());
+            }
+        } catch (IOException e) {
+            throw new RetrofitException("Error creating water analysis: " + e.getMessage());
+        }
+    }
 }

@@ -91,4 +91,20 @@ public interface IFountainService {
      */
     @GET("fountains/search")
     Call<List<FountainDto>> searchFountains(@Query("q") String query);
+
+    /**
+     * Updates the susceptibility information of a specified fountain.
+     * <p>
+     * This method sends a PUT request to update the susceptibility details of the fountain identified by the provided fountain ID.
+     * The updated fountain data, including susceptibility information, is supplied in the request body.
+     * On a successful update, the server returns the updated fountain details.
+     * </p>
+     *
+     * @param fountainId the unique identifier of the fountain to be updated.
+     * @param fountain a {@link FountainDto} object containing the updated susceptibility and other fountain details.
+     * @return a {@link Call} object containing the updated {@link FountainDto} from the server.
+     */
+    @PUT("fountains/{fountainId}/susceptibility")
+    Call<FountainDto> updateFountainSusceptibility(@Path("fountainId") int fountainId, @Body FountainDto fountain);
+
 }

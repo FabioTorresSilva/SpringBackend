@@ -193,10 +193,42 @@ public class FountainService {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                throw new RetrofitException("Erro ao pesquisar fontes: " + response.code());
+                throw new RetrofitException("Error searching fountains: " + response.code());
             }
         } catch (IOException e) {
-            throw new RetrofitException("Erro ao pesquisar fontes: " + e.getMessage());
+            throw new RetrofitException("Error searching fountains: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Updates the susceptibility details of a specified fountain.
+     * <p>
+     * This method validates that the provided fountain ID is greater than zero. It then performs a synchronous Retrofit call to update
+     * the susceptibility information of the fountain using the provided {@link FountainDto} data. If the HTTP response is successful,
+     * the updated fountain details are returned. Otherwise, if the response is unsuccessful or an I/O error occurs, a {@link RetrofitException}
+     * is thrown with an appropriate error message.
+     * </p>
+     *
+     * @param fountainId the unique identifier of the fountain whose susceptibility information is to be updated;
+     *                   must be greater than zero.
+     * @param fountain   a {@link FountainDto} object containing the updated susceptibility and other fountain details.
+     * @return the updated {@link FountainDto} reflecting the new susceptibility details.
+     * @throws IllegalArgumentException if the fountainId is less than or equal to zero.
+     * @throws RetrofitException if the update operation fails due to an unsuccessful HTTP response or an I/O error.
+     */
+    public FountainDto updateFountainSusceptibility(int fountainId, FountainDto fountain) {
+        if (fountainId <= 0) {
+            throw new IllegalArgumentException("The fountain ID must be greater than zero.");
+        }
+        try {
+            Response<FountainDto> response = fountainService.updateFountainSusceptibility(fountainId, fountain).execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RetrofitException("Error updating fountain susceptibility: " + response.code());
+            }
+        } catch (IOException e) {
+            throw new RetrofitException("Error updating fountain susceptibility: " + e.getMessage());
         }
     }
 }

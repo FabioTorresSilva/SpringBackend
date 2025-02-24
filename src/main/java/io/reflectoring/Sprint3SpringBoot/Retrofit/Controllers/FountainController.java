@@ -153,4 +153,39 @@ public class FountainController {
                     .body(Collections.emptyList());
         }
     }
+
+    /**
+     * Updates the susceptibility information of a specified fountain.
+     * <p>
+     * This endpoint handles HTTP PUT requests to update the susceptibility data of the fountain identified by the provided fountain ID.
+     * It expects the fountain ID as a path variable and the updated fountain data in the request body.
+     * <br>
+     * The method performs the following operations:
+     * <ul>
+     *   <li>Validates that the fountain ID is greater than zero. If not, it returns a 400 BAD_REQUEST response.</li>
+     *   <li>Invokes the service layer to update the fountain's susceptibility details using the provided {@link FountainDto}.</li>
+     *   <li>If the fountain is successfully updated and exists, it returns a 200 OK response with the updated fountain details.</li>
+     *   <li>If the fountain is not found, it returns a 404 NOT_FOUND response.</li>
+     *   <li>If an error occurs during the update process (captured as a {@link RetrofitException}), it returns a 500 INTERNAL_SERVER_ERROR response.</li>
+     * </ul>
+     * </p>
+     *
+     * @param fountainId the unique identifier of the fountain to be updated; must be greater than zero.
+     * @param fountain a {@link FountainDto} object containing the updated susceptibility and other fountain details.
+     * @return a {@link ResponseEntity} containing the updated {@link FountainDto} if successful, or an appropriate HTTP status code indicating the result of the operation.
+     */
+    @PutMapping("/{fountainId}/susceptibility")
+    public ResponseEntity<FountainDto> updateFountainSusceptibility(@PathVariable int fountainId, @RequestBody FountainDto fountain) {
+        if (fountainId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        try {
+            FountainDto updatedFountain = fountainService.updateFountainSusceptibility(fountainId, fountain);
+            return updatedFountain != null
+                    ? ResponseEntity.ok(updatedFountain)
+                    : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (RetrofitException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

@@ -2,6 +2,9 @@ package io.reflectoring.Sprint3SpringBoot.Services;
 
 import io.reflectoring.Sprint3SpringBoot.Dto.StatisticsDto;
 import io.reflectoring.Sprint3SpringBoot.Dto.WaterAnalysisDto;
+import io.reflectoring.Sprint3SpringBoot.Models.Statistics;
+import io.reflectoring.Sprint3SpringBoot.Repositories.StatisticsRepository;
+import io.reflectoring.Sprint3SpringBoot.Repositories.UserRepository;
 import io.reflectoring.Sprint3SpringBoot.Retrofit.Service.WaterAnalysisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +17,12 @@ public class StatisticsService{
 
 
     private final WaterAnalysisService waterAnalysisService;
+    private final StatisticsRepository statisticsRepository;
 
     @Autowired
-    public StatisticsService(WaterAnalysisService waterAnalysisService) {
+    public StatisticsService(WaterAnalysisService waterAnalysisService, StatisticsRepository statisticsRepository) {
         this.waterAnalysisService = waterAnalysisService;
-
+        this.statisticsRepository = statisticsRepository;
     }
     /**
      * Calculates statistics (average, max, min, and total count) for water analyses.
@@ -28,9 +32,10 @@ public class StatisticsService{
      * @return A StatisticsDto object containing the calculated statistics.
      * @throws IllegalArgumentException If the WaterAnalysisService returns null or an error occurs during processing.
      */
-    public StatisticsDto createStatistics(LocalDate date) {
+    public Statistics createStatistics(LocalDate date) {
         try {
             // Get all water analyses from the service
+
             List<WaterAnalysisDto> allAnalyses = waterAnalysisService.getAllWaterAnalyses();
 
             // Check if the list of analyses is null (service error)
@@ -47,7 +52,8 @@ public class StatisticsService{
 
             // If no analyses are found, return default statistics
             if (analyses.isEmpty()) {
-             return new StatisticsDto(0, 0, 0, 0, date);
+
+                throw new IllegalArgumentException("WaterAnalysis list returned empty.");
 
             }
 
@@ -64,7 +70,13 @@ public class StatisticsService{
             }
 
             double average = sum / analyses.size();
-            return  new StatisticsDto(average, max, min, analyses.size(), date);
+            System.out.println(max +" " + min +" " + average +" " + analyses.size() +" " + date);
+
+            Statistics statistics = new Statistics(average, max, min, analyses.size(), date);
+            System.out.println(statistics.maxRadonLevel);
+            statisticsRepository.save(statistics);
+
+            return  statistics;
 
             } catch (Exception e) {
             // Log the exception and rethrow it as a runtime exception

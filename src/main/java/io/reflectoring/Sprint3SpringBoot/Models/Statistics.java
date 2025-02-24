@@ -1,8 +1,6 @@
 package io.reflectoring.Sprint3SpringBoot.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,18 +11,19 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "[statistics]")
 public class Statistics {
-    @Id
-    private int id;
 
-    double averageRadonLevel;
-    double maxRadonLevel;
-    double minRadonLevel;
-    int totalAnalysis;
-    LocalDate date;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public int id;
+
+    public double averageRadonLevel;
+    public double maxRadonLevel;
+    public double minRadonLevel;
+    public int totalAnalysis;
+
+    public LocalDate date;
 
     public Statistics(double average, double max, double min, int totalAnalysis, LocalDate date) {
         this.averageRadonLevel = average;
@@ -32,5 +31,9 @@ public class Statistics {
         this.minRadonLevel = min;
         this.totalAnalysis = totalAnalysis;
         this.date = date;
+    }
+
+    public Statistics() {
+
     }
 }

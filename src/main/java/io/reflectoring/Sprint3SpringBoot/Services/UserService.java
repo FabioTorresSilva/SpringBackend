@@ -258,8 +258,9 @@ public class UserService implements IUserService {
         List<User> usersRole = new ArrayList<>();
 
         for (User u : allUsers) {
-            if (u.getRole() == role)
+            if (u.getRole() == role) {
                 usersRole.add(u);
+            }
         }
 
         if (usersRole.isEmpty()) {

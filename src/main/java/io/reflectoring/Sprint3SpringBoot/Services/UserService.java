@@ -144,7 +144,7 @@ public class UserService implements IUserService {
      * Adds a fountain to a user's list of favorites.
      *
      * @param id          The unique identifier of the user.
-     * @param fountainDto The fountain to be added as a favorite.
+     * @param fountainId The fountain to be added as a favorite.
      * @return The added {@link FountainDto}.
      * @throws UserNotFoundException If the user with the given ID is not found.
      * @throws RoleNotAcepted        If the user is not a client.
@@ -171,10 +171,10 @@ public class UserService implements IUserService {
             usr.getFavourites().add(fountainId);
         }
 
-        if(usr.getFavourites().contains(fountainDto))
+        if(usr.getFavourites().contains(fountainId))
             throw new ParamException("Favourite already exists");
 
-        usr.getFavourites().add(fountainDto);
+        usr.getFavourites().add(fountainId);
 
         userRepository.save(usr);
 

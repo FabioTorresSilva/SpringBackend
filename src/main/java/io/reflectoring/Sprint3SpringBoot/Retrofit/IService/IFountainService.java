@@ -122,4 +122,12 @@ public interface IFountainService {
     @PUT("fountains/{fountainId}/device/{newDeviceId}")
     Call<FountainDto> updateDeviceForFountain(@Path("fountainId") int fountainId, @Path("newDeviceId") int newDeviceId);
 
+    /**
+     * Retrieves water analysis data for a specific fountain.
+     *
+     * @param fountainId the unique identifier of the fountain.
+     * @return a Call object containing the fountain water analysis data.
+     */
+    @GET("fountains/{fountainId}/water-analysis")
+    Call<FountainDto> getWaterAnalysisForFountain(@Path("fountainId") int fountainId);
 }

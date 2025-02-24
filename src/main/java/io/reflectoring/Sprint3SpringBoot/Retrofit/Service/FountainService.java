@@ -268,4 +268,27 @@ public class FountainService {
             throw new RetrofitException("Error updating device for fountain: " + e.getMessage());
         }
     }
+
+    /**
+     * Retrieves water analysis data for the specified fountain.
+     *
+     * @param fountainId the unique identifier of the fountain.
+     * @return the FountainDto containing water analysis information.
+     * @throws RetrofitException if an error occurs during the API call.
+     */
+    public FountainDto getWaterAnalysisForFountain(int fountainId) {
+        if (fountainId <= 0) {
+            throw new IllegalArgumentException("The fountain ID must be greater than zero.");
+        }
+        try {
+            Response<FountainDto> response = fountainService.getWaterAnalysisForFountain(fountainId).execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RetrofitException("Error getting water analysis: " + response.code());
+            }
+        } catch (IOException e) {
+            throw new RetrofitException("Error getting water analysis: " + e.getMessage());
+        }
+    }
 }

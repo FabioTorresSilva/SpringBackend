@@ -223,4 +223,24 @@ public class FountainController {
         }
     }
 
+    /**
+     * Retrieves water analysis data for a specific fountain.
+     *
+     * @param fountainId the unique identifier of the fountain.
+     * @return ResponseEntity containing the water analysis data or an appropriate error status.
+     */
+    @GetMapping("/{fountainId}/water-analysis")
+    public ResponseEntity<FountainDto> getWaterAnalysisForFountain(@PathVariable int fountainId) {
+        if (fountainId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        try {
+            FountainDto waterAnalysis = fountainService.getWaterAnalysisForFountain(fountainId);
+            return waterAnalysis != null
+                    ? ResponseEntity.ok(waterAnalysis)
+                    : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (RetrofitException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

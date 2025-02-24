@@ -82,13 +82,4 @@ public class RetrofitConfig {
                 .build();
         return retrofit.create(IWaterAnalysisService.class);
     }
-
-   /* @Bean
-    public TourController tourApiClient() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://tour-pedia.org")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        return retrofit.create(TourController.class);
-    }*/
 }

@@ -1,11 +1,14 @@
 package io.reflectoring.Sprint3SpringBoot.Retrofit.Service;
 
+import io.reflectoring.Sprint3SpringBoot.Dto.UserFavoritesWaterAnalysisDto;
 import io.reflectoring.Sprint3SpringBoot.Dto.WaterAnalysisDto;
 import io.reflectoring.Sprint3SpringBoot.Exceptions.RetrofitException;
 import io.reflectoring.Sprint3SpringBoot.Retrofit.IService.IWaterAnalysisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
+import io.reflectoring.Sprint3SpringBoot.Dto.UserFavoritesFountainsDto;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -104,4 +107,25 @@ public class WaterAnalysisService {
             throw new RetrofitException("Failed to create water analysis" + e);
         }
     }
+
+    /**
+     * Retrieves aggregated analysis data for user favorite fountains.
+     *
+     * @param favoritesDto DTO containing a list of favorite fountain IDs.
+     * @return Aggregated water analysis data.
+     */
+    public UserFavoritesWaterAnalysisDto getFavoriteFountainsAnalysis(UserFavoritesFountainsDto favoritesDto) {
+        try {
+            Response<UserFavoritesWaterAnalysisDto> response =
+                    waterAnalysisService.getFavoriteFountainsAnalysis(favoritesDto).execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RetrofitException("Error fetching favorite fountains analysis, Status Code: " + response.code());
+            }
+        } catch (IOException e) {
+            throw new RetrofitException("Failed to fetch favorite fountains analysis: " + e);
+        }
+    }
 }
+

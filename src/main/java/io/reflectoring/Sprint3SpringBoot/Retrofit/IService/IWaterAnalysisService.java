@@ -1,5 +1,7 @@
 package io.reflectoring.Sprint3SpringBoot.Retrofit.IService;
 
+import io.reflectoring.Sprint3SpringBoot.Dto.UserFavoritesFountainsDto;
+import io.reflectoring.Sprint3SpringBoot.Dto.UserFavoritesWaterAnalysisDto;
 import io.reflectoring.Sprint3SpringBoot.Dto.WaterAnalysisDto;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -47,4 +49,12 @@ public interface IWaterAnalysisService {
      */
     @POST("wateranalysis")
     Call<WaterAnalysisDto> createWaterAnalysis(@Body WaterAnalysisDto waterAnalysis);
+
+    /**
+     * gets user favorite fountains stats using analysis
+     * @param favoritesDto
+     * @return
+     */
+    @POST("wateranalysis/favorites/analysis")
+    Call<UserFavoritesWaterAnalysisDto> getFavoriteFountainsAnalysis(@Body UserFavoritesFountainsDto favoritesDto);
 }

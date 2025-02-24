@@ -1,5 +1,7 @@
 package io.reflectoring.Sprint3SpringBoot.Retrofit.Controllers;
 
+import io.reflectoring.Sprint3SpringBoot.Dto.UserFavoritesFountainsDto;
+import io.reflectoring.Sprint3SpringBoot.Dto.UserFavoritesWaterAnalysisDto;
 import io.reflectoring.Sprint3SpringBoot.Dto.WaterAnalysisDto;
 import io.reflectoring.Sprint3SpringBoot.Exceptions.RetrofitException;
 import io.reflectoring.Sprint3SpringBoot.Retrofit.Service.WaterAnalysisService;
@@ -61,6 +63,16 @@ public class WaterAnalysisController {
             WaterAnalysisDto newWaterAnalysis = waterAnalysisService.createWaterAnalysis(waterAnalysis);
             return new ResponseEntity<>(newWaterAnalysis, HttpStatus.CREATED);
         }catch (RetrofitException e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/favorites/analysis")
+    public ResponseEntity<UserFavoritesWaterAnalysisDto> getFavoriteFountainsAnalysis(@RequestBody UserFavoritesFountainsDto favoritesDto) {
+        try {
+            UserFavoritesWaterAnalysisDto analysisDto = waterAnalysisService.getFavoriteFountainsAnalysis(favoritesDto);
+            return new ResponseEntity<>(analysisDto, HttpStatus.OK);
+        } catch (RetrofitException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

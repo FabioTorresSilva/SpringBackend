@@ -33,7 +33,7 @@ public class DeviceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DeviceDto> getDeviceById(@RequestParam("id") Integer id) {
+    public ResponseEntity<DeviceDto> getDeviceById(@PathVariable("id") Integer id) {
         if (id <= 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }try{

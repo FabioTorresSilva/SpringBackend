@@ -86,9 +86,9 @@ public class ContinuousUseDeviceService {
         }
     }
 
-    public ContinuousUseDeviceDto updateContinuousUseDeviceFrequency(int id, ContinuousUseDeviceDto continuousUseDeviceDto, int frequency) {
+    public ContinuousUseDeviceDto updateContinuousUseDeviceFrequency(int id, int frequency) {
         try{
-            Response<ContinuousUseDeviceDto> response = continuousUseDeviceService.updateFrequency(id, continuousUseDeviceDto, frequency).execute();
+            Response<ContinuousUseDeviceDto> response = continuousUseDeviceService.updateFrequency(id, frequency).execute();
             if (response.isSuccessful()) {
                 return response.body();
             }else {
@@ -108,6 +108,7 @@ public class ContinuousUseDeviceService {
     public ContinuousUseDeviceDto createContinuousUseDevice(ContinuousUseDeviceDto continuousUseDeviceDto) {
         try {
             Response<ContinuousUseDeviceDto> response = continuousUseDeviceService.createContinuousUseDevice(continuousUseDeviceDto).execute();
+
             if (response.isSuccessful()) {
                 return response.body();
             } else {

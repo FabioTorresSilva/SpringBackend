@@ -70,11 +70,11 @@ public class ContinuousUseDeviceController {
     }
 
     @PutMapping("/{id}/frequency")
-    public ResponseEntity<ContinuousUseDeviceDto> updateContinuousUseDeviceFrequency(@RequestBody ContinuousUseDeviceDto continuousUseDeviceDto, @PathVariable("id") int id, int frequency) {
+    public ResponseEntity<ContinuousUseDeviceDto> updateContinuousUseDeviceFrequency( @PathVariable("id") int id, @RequestBody int frequency) {
         if (id <= 0 || frequency < 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }try{
-            ContinuousUseDeviceDto updateFrequency = continuousUseDeviceService.updateContinuousUseDeviceFrequency(id, continuousUseDeviceDto, frequency);
+            ContinuousUseDeviceDto updateFrequency = continuousUseDeviceService.updateContinuousUseDeviceFrequency(id, frequency);
             return ResponseEntity.ok(updateFrequency);
         }catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

@@ -149,23 +149,28 @@ public class UserService implements IUserService {
      * @throws ParamException        If the provided fountain is null.
      */
     @Override
-    public FountainDto addFavourite(int id, int fountainDto) {
+    public FountainDto addFavourite(int id, int fountainId) {
 
-
-        Optional<User> user = userRepository.findById(id);
-
-        if (user.isEmpty()) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()) {
             throw new UserNotFoundException("User with ID " + id + " not found.");
         }
 
-        if (user.get().getRole() != Role.Client)
+        User usr = userOptional.get();
+        if (usr.getRole() != Role.Client) {
             throw new RoleNotAcepted("User with ID " + id + " is not a client.");
+        }
 
-        User usr = user.get();
-        usr.getFavourites().add(fountainDto);
+        // Toggle the favourite: if it exists, remove it; otherwise, add it.
+        if (usr.getFavourites().contains(fountainId)) {
+            usr.getFavourites().remove(Integer.valueOf(fountainId));
+        } else {
+            usr.getFavourites().add(fountainId);
+        }
+
         userRepository.save(usr);
 
-        return fountainService.getFountainById(fountainDto);
+        return fountainService.getFountainById(fountainId);
     }
 
     /**
@@ -325,7 +330,7 @@ public class UserService implements IUserService {
         FountainDto fountainDto = fountainService.getFountainById(idFountain);
 
         if (fountainDto != null)
-                throw new ParamException("Fountain does not exist.");
+            throw new ParamException("Fountain does not exist.");
 
         return user.getFavourites().contains(idFountain);
     }

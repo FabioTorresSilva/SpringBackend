@@ -23,17 +23,11 @@ public class CorsConfig {
         // Creates a CORS configuration object
         CorsConfiguration config = new CorsConfiguration();
 
-        // Configures the allowed origins
         config.setAllowedOrigins(List.of("http://localhost:4200"));
-
-        // Configures the allowed methods
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-
-        // Configures the allowed headers
         config.setAllowedHeaders(List.of("*"));
-
-        // Configures whether credentials are allowed
         config.setAllowCredentials(true);
+        config.setExposedHeaders(List.of("Authorization"));
 
         // Creates a CORS configuration source
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

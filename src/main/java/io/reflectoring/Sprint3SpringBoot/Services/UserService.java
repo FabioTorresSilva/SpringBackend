@@ -80,7 +80,7 @@ public class UserService implements IUserService {
         if (id != user.getId())
             throw new ParamException("Ids do not match.");
 
-        if (userRepository.findUserByEmail(user.getEmail()) != null)
+        if (userRepository.findUserByEmail(user.getEmail()) != null && userRepository.findUserByEmail(user.getEmail()).getId() != user.getId())
             throw new ParamException("Email already exists");
 
         User updateUser = getUserById(id);
@@ -108,9 +108,11 @@ public class UserService implements IUserService {
     public User createUser(User user) {
 
         try {
+            if (userRepository.findUserByEmail(user.getEmail()) != null)
+                throw new ParamException("Email already exists");
             userRepository.save(user);
         } catch (Exception e) {
-            throw new RepositoryException("Error creating user in repository");
+            throw new RepositoryException("Error creating user in repository\n" + e.getMessage());
         }
         return user;
     }
@@ -156,6 +158,7 @@ public class UserService implements IUserService {
             throw new UserNotFoundException("User with ID " + id + " not found.");
         }
 
+
         User usr = userOptional.get();
         if (usr.getRole() != Role.Client) {
             throw new RoleNotAcepted("User with ID " + id + " is not a client.");
@@ -167,6 +170,11 @@ public class UserService implements IUserService {
         } else {
             usr.getFavourites().add(fountainId);
         }
+
+        if(usr.getFavourites().contains(fountainDto))
+            throw new ParamException("Favourite already exists");
+
+        usr.getFavourites().add(fountainDto);
 
         userRepository.save(usr);
 

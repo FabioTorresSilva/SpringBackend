@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/water-analysis")
+@RequestMapping("/api/wateranalysis")
 public class WaterAnalysisController {
 
     private final WaterAnalysisService waterAnalysisService;

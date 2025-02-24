@@ -128,7 +128,6 @@ public class UserController {
         }
     }
 
-
     @GetMapping("/favorites/{id}/{i}")
     public ResponseEntity<?> getXFavourites(@PathVariable int id, @PathVariable int i){
         try{

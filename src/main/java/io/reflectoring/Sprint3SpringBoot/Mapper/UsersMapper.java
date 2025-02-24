@@ -10,7 +10,7 @@ public class UsersMapper {
     public UsersMapper(){}
 
     public UserDto UserToDto(User user){
-        return new UserDto(user.getName(), user.getEmail(), user.getRole());
+        return new UserDto(user.getName(), user.getEmail(), user.getRole(), user.getPassword());
     }
 
     //public UserDto ClientToDto(Client user){

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * REST controller for managing users.
@@ -97,8 +98,12 @@ public class UserController {
     public ResponseEntity<?> updateUser(@PathVariable int id, @RequestBody UserDto userDto) {
         try {
             User updatedUser = userService.getUserById(id);
-            updatedUser.setName(userDto.name);
-            updatedUser.setEmail(userDto.email);
+            if(!Objects.equals(userDto.name, updatedUser.getName()))
+                updatedUser.setName(userDto.name);
+            if(!Objects.equals(userDto.email, updatedUser.getEmail()))
+                updatedUser.setEmail(userDto.email);
+            if(!Objects.equals(userDto.password, updatedUser.getPassword()))
+                updatedUser.setPassword(userDto.password);
 
             userService.updateUser(id, updatedUser);
             return ResponseEntity.ok(userDto);
@@ -188,7 +193,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fountain not found");
             }
             return ResponseEntity.ok(userService.addFavourite(id, fountainId));
-        } catch (UserNotFoundException | RoleNotAcepted | RetrofitException e) {
+        } catch (UserNotFoundException | RoleNotAcepted | RetrofitException | ParamException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }

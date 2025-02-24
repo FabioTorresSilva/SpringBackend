@@ -231,4 +231,41 @@ public class FountainService {
             throw new RetrofitException("Error updating fountain susceptibility: " + e.getMessage());
         }
     }
+
+    /**
+     * Updates the device associated with a specific fountain.
+     * <p>
+     * This method updates the device for the fountain identified by the provided fountainId.
+     * The new device to be associated with the fountain is specified by newDeviceId.
+     * The method performs the following steps:
+     * <ul>
+     *   <li>Validates that both <code>fountainId</code> and <code>newDeviceId</code> are greater than zero; otherwise, it throws an {@link IllegalArgumentException}.</li>
+     *   <li>Executes a synchronous Retrofit call to update the device associated with the fountain.</li>
+     *   <li>If the HTTP response is successful, it returns the updated {@link FountainDto} with the new device details.</li>
+     *   <li>If the response is unsuccessful, it throws a {@link RetrofitException} with the HTTP status code.</li>
+     *   <li>If an {@link IOException} occurs during the request, it throws a {@link RetrofitException} with the error message.</li>
+     * </ul>
+     * </p>
+     *
+     * @param fountainId the unique identifier of the fountain to be updated; must be greater than zero.
+     * @param newDeviceId the unique identifier of the new device to be associated with the fountain; must be greater than zero.
+     * @return the updated {@link FountainDto} reflecting the fountain after the device update.
+     * @throws IllegalArgumentException if either <code>fountainId</code> or <code>newDeviceId</code> is less than or equal to zero.
+     * @throws RetrofitException if the update operation fails due to an unsuccessful HTTP response or an I/O error.
+     */
+    public FountainDto updateDeviceForFountain(int fountainId, int newDeviceId) {
+        if (fountainId <= 0 || newDeviceId <= 0) {
+            throw new IllegalArgumentException("IDs must be greater than zero.");
+        }
+        try {
+            Response<FountainDto> response = fountainService.updateDeviceForFountain(fountainId, newDeviceId).execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RetrofitException("Error updating device for fountain: " + response.code());
+            }
+        } catch (IOException e) {
+            throw new RetrofitException("Error updating device for fountain: " + e.getMessage());
+        }
+    }
 }

@@ -107,4 +107,19 @@ public interface IFountainService {
     @PUT("fountains/{fountainId}/susceptibility")
     Call<FountainDto> updateFountainSusceptibility(@Path("fountainId") int fountainId, @Body FountainDto fountain);
 
+    /**
+     * Updates the device associated with a specific fountain.
+     * <p>
+     * This method sends a PUT request to update the device for the fountain identified by the given fountainId.
+     * The new device to be associated with the fountain is specified by newDeviceId. On a successful update,
+     * the server returns the updated fountain details encapsulated in a {@link FountainDto} object.
+     * </p>
+     *
+     * @param fountainId the unique identifier of the fountain whose device is to be updated.
+     * @param newDeviceId the unique identifier of the new device to associate with the fountain.
+     * @return a {@link Call} object containing the updated {@link FountainDto} after the device update.
+     */
+    @PUT("fountains/{fountainId}/device/{newDeviceId}")
+    Call<FountainDto> updateDeviceForFountain(@Path("fountainId") int fountainId, @Path("newDeviceId") int newDeviceId);
+
 }

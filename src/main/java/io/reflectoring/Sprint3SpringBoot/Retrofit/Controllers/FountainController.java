@@ -188,4 +188,39 @@ public class FountainController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    /**
+     * Updates the device associated with a specified fountain.
+     * <p>
+     * This endpoint handles HTTP PUT requests to update the device for the fountain identified by the provided fountainId.
+     * The new device to be associated with the fountain is specified by newDeviceId in the URL path.
+     * The method performs the following operations:
+     * <ul>
+     *   <li>Validates that both fountainId and newDeviceId are greater than zero; if not, returns a 400 BAD_REQUEST response.</li>
+     *   <li>Invokes the service layer to update the device for the specified fountain.</li>
+     *   <li>If the update is successful and the updated fountain is returned, responds with a 200 OK status and the updated fountain details.</li>
+     *   <li>If the updated fountain is not found, returns a 404 NOT_FOUND response.</li>
+     *   <li>If a RetrofitException occurs during the update process, returns a 500 INTERNAL_SERVER_ERROR response.</li>
+     * </ul>
+     * </p>
+     *
+     * @param fountainId the unique identifier of the fountain to be updated; must be greater than zero.
+     * @param newDeviceId the unique identifier of the new device to be associated with the fountain; must be greater than zero.
+     * @return a {@link ResponseEntity} containing the updated {@link FountainDto} if successful, or an appropriate HTTP status code.
+     */
+    @PutMapping("/{fountainId}/device/{newDeviceId}")
+    public ResponseEntity<FountainDto> updateDeviceForFountain(@PathVariable int fountainId, @PathVariable int newDeviceId) {
+        if (fountainId <= 0 || newDeviceId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        try {
+            FountainDto updatedFountain = fountainService.updateDeviceForFountain(fountainId, newDeviceId);
+            return updatedFountain != null
+                    ? ResponseEntity.ok(updatedFountain)
+                    : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (RetrofitException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }

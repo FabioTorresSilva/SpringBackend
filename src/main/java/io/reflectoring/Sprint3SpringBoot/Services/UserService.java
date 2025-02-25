@@ -171,9 +171,6 @@ public class UserService implements IUserService {
             usr.getFavourites().add(fountainId);
         }
 
-        if(usr.getFavourites().contains(fountainId))
-            throw new ParamException("Favourite already exists");
-
         usr.getFavourites().add(fountainId);
 
         userRepository.save(usr);

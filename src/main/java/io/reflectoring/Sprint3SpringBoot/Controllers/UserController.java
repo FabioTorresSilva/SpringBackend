@@ -244,7 +244,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/{idUser}/fountain/{idFountain}")
+    @GetMapping("userfavs/{idUser}/{idFountain}")
     public ResponseEntity<?> isFountainFavorite(@PathVariable int idUser, @PathVariable int idFountain)
     {
         try{

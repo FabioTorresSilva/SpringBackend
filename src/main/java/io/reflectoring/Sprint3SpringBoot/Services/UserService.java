@@ -224,7 +224,7 @@ public class UserService implements IUserService {
             throw new RoleNotAcepted("User with ID " + id + " is not a tester.");
 
         List<WaterAnalysisDto> waterAnalysis = new ArrayList<>();
-        for (Integer i : user.getFavourites()) {
+        for (Integer i : user.getWaterAnalysis()) {
             WaterAnalysisDto waterAnalysisDto = waterAnalysisService.getWaterAnalysisById(i);
             waterAnalysis.add(waterAnalysisDto);
         }
@@ -334,9 +334,11 @@ public class UserService implements IUserService {
 
         FountainDto fountainDto = fountainService.getFountainById(idFountain);
 
-        if (fountainDto != null)
+        if (fountainDto == null)
             throw new ParamException("Fountain does not exist.");
 
+        if (user.getFavourites().contains(fountainDto.getId()))
+            return true;
         return user.getFavourites().contains(idFountain);
     }
 }

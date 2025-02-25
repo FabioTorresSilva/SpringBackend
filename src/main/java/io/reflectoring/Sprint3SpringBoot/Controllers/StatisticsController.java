@@ -28,10 +28,8 @@ public class StatisticsController {
     @PostMapping
     public ResponseEntity<?> createStatistics() {
         try{
-            //String s = "ssss";
-            //return ResponseEntity.status(HttpStatus.OK).body(s);
             Statistics statistics = statisticsService.createStatistics(LocalDate.now());
-            return ResponseEntity.status(HttpStatus.OK).body(statisticsMapper.StatisticstoDto(statistics));
+            return ResponseEntity.status(HttpStatus.OK).body(statistics);
         } catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

@@ -223,7 +223,7 @@ public class UserService implements IUserService {
             throw new RoleNotAcepted("User with ID " + id + " is not a tester.");
 
         List<WaterAnalysisDto> waterAnalysis = new ArrayList<>();
-        for (Integer i : user.getWaterAnalysis()) {
+        for (Integer i : user.getFavourites()) {
             WaterAnalysisDto waterAnalysisDto = waterAnalysisService.getWaterAnalysisById(i);
             waterAnalysis.add(waterAnalysisDto);
         }

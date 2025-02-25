@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -40,8 +41,9 @@ public class StatisticsControllerTest {
 
         when(statisticsService.createStatistics(date)).thenReturn(statistics);
 
-        mockMvc.perform(post("/api/statistics"))
-//                .with(csrf()) // Adiciona o token CSRF à requisição
+        mockMvc.perform(post("/api/statistics")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.averageRadonLevel").value(10.0))
                 .andExpect(jsonPath("$.maxRadonLevel").value(20.0))

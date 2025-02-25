@@ -1,18 +1,33 @@
 package io.reflectoring.Sprint3SpringBoot.Dto;
 
 import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class StatisticsDto {
 
-    private static double average;
-    private static double max;
-    private static double min;
-    private static int totalAnalyses;
-    private static LocalDate date; // Opcional, usado para filtros por data
+    // Removido o static
+    @JsonProperty("averageRadonLevel")
+    private double average;
 
+    @JsonProperty("maxRadonLevel")
+    private double max;
+
+    @JsonProperty("minRadonLevel")
+    private double min;
+
+    @JsonProperty("totalAnalysis")
+    private int totalAnalyses;
+
+    @JsonProperty("date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate date;
+
+    // Construtor vazio para o Jackson
     public StatisticsDto() {
     }
 
+    // Construtor com parâmetros
     public StatisticsDto(double average, double max, double min, int totalAnalyses, LocalDate date) {
         this.average = average;
         this.max = max;
@@ -21,7 +36,8 @@ public class StatisticsDto {
         this.date = date;
     }
 
-    public static double getAverage() {
+    // Getters e Setters sem static
+    public double getAverage() {
         return average;
     }
 
@@ -29,7 +45,7 @@ public class StatisticsDto {
         this.average = average;
     }
 
-    public static double getMax() {
+    public double getMax() {
         return max;
     }
 
@@ -37,7 +53,7 @@ public class StatisticsDto {
         this.max = max;
     }
 
-    public static double getMin() {
+    public double getMin() {
         return min;
     }
 
@@ -45,7 +61,7 @@ public class StatisticsDto {
         this.min = min;
     }
 
-    public static int getTotalAnalyses() {
+    public int getTotalAnalyses() {
         return totalAnalyses;
     }
 
@@ -53,7 +69,7 @@ public class StatisticsDto {
         this.totalAnalyses = totalAnalyses;
     }
 
-    public static LocalDate getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

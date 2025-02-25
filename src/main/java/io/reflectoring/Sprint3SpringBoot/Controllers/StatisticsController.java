@@ -6,6 +6,7 @@ import io.reflectoring.Sprint3SpringBoot.Models.Statistics;
 import io.reflectoring.Sprint3SpringBoot.Services.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,14 +26,12 @@ public class StatisticsController {
         this.statisticsMapper = statisticsMapper;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createStatistics() {
-        try{
-            //String s = "ssss";
-            //return ResponseEntity.status(HttpStatus.OK).body(s);
+        try {
             Statistics statistics = statisticsService.createStatistics(LocalDate.now());
             return ResponseEntity.status(HttpStatus.OK).body(statisticsMapper.StatisticstoDto(statistics));
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }

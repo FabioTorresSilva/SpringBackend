@@ -48,14 +48,12 @@ public class StatisticsService{
             if (allAnalyses == null) {
                 throw new IllegalArgumentException("WaterAnalysisService returned null.");
             }
-
             // Filter analyses by date if a date is provided
             List<WaterAnalysisDto> analyses = date != null
                     ? allAnalyses.stream()
                     .filter(analysis -> analysis.getDate().equals(date))
                     .toList()
                     : allAnalyses;
-
             // If no analyses are found, return default statistics
             if (analyses.isEmpty()) {
 
@@ -76,10 +74,7 @@ public class StatisticsService{
             }
 
             double average = sum / analyses.size();
-            System.out.println(max +" " + min +" " + average +" " + analyses.size() +" " + date);
-
             Statistics statistics = new Statistics(average, max, min, analyses.size(), date);
-            System.out.println(statistics.maxRadonLevel);
             statisticsRepository.save(statistics);
 
             return  statistics;

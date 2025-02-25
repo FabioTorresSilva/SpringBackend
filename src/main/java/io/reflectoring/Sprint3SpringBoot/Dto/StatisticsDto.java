@@ -3,6 +3,7 @@ package io.reflectoring.Sprint3SpringBoot.Dto;
 import java.time.LocalDate;
 
 public class StatisticsDto {
+
     private static double average;
     private static double max;
     private static double min;

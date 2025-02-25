@@ -1,5 +1,8 @@
 package io.reflectoring.Sprint3SpringBoot.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.reflectoring.Sprint3SpringBoot.Retrofit.Config.LocalDateDeserializer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +26,8 @@ public class Statistics {
     public double minRadonLevel;
     public int totalAnalysis;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     public LocalDate date;
 
     public Statistics(double average, double max, double min, int totalAnalysis, LocalDate date) {

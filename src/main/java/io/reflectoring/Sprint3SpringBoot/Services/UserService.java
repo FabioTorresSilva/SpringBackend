@@ -170,8 +170,7 @@ public class UserService implements IUserService {
         } else {
             usr.getFavourites().add(fountainId);
         }
-
-        usr.getFavourites().add(fountainId);
+        
 
         userRepository.save(usr);
 

@@ -2,7 +2,9 @@ package io.reflectoring.Sprint3SpringBoot.Services;
 
 import io.reflectoring.Sprint3SpringBoot.Dto.StatisticsDto;
 import io.reflectoring.Sprint3SpringBoot.Dto.WaterAnalysisDto;
+import io.reflectoring.Sprint3SpringBoot.Exceptions.UserNotFoundException;
 import io.reflectoring.Sprint3SpringBoot.Models.Statistics;
+import io.reflectoring.Sprint3SpringBoot.Models.User;
 import io.reflectoring.Sprint3SpringBoot.Repositories.StatisticsRepository;
 import io.reflectoring.Sprint3SpringBoot.Repositories.UserRepository;
 import io.reflectoring.Sprint3SpringBoot.Retrofit.Service.WaterAnalysisService;
@@ -10,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StatisticsService{
@@ -18,11 +22,13 @@ public class StatisticsService{
 
     private final WaterAnalysisService waterAnalysisService;
     private final StatisticsRepository statisticsRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public StatisticsService(WaterAnalysisService waterAnalysisService, StatisticsRepository statisticsRepository) {
+    public StatisticsService(WaterAnalysisService waterAnalysisService, StatisticsRepository statisticsRepository, UserRepository userRepository) {
         this.waterAnalysisService = waterAnalysisService;
         this.statisticsRepository = statisticsRepository;
+        this.userRepository = userRepository;
     }
     /**
      * Calculates statistics (average, max, min, and total count) for water analyses.
@@ -83,5 +89,52 @@ public class StatisticsService{
             throw new IllegalArgumentException("An error occurred while creating statistics: " + e.getMessage(), e);
         }
     }
+
+    public List<Statistics> getMonthStatistics(int month) {
+
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("Month out of range: " + month);
+        }
+
+        List<Statistics> all = statisticsRepository.findAll();
+
+        List<Statistics> monthStatistics = new ArrayList<>();
+        for (Statistics statistics : all) {
+            if (statistics.date.getMonthValue() == month && statistics.date.getYear() == LocalDate.now().getYear()) {
+                monthStatistics.add(statistics);
+            }
+        }
+
+        return monthStatistics;
+    }
+
+    public List<Statistics> getYearStatistics(int year) {
+
+        if (year < 1900 || year > LocalDate.now().getYear()) {
+            throw new IllegalArgumentException("Month out of range: " + year);
+        }
+
+        List<Statistics> all = statisticsRepository.findAll();
+
+        List<Statistics> yearStatistics = new ArrayList<>();
+        for (Statistics statistics : all) {
+            if (statistics.date.getYear() == year) {
+                yearStatistics.add(statistics);
+            }
+        }
+
+        return yearStatistics;
+    }
+
+    public Statistics getStatisticsById(int id) {
+        Statistics statistics = statisticsRepository.findById(id);
+
+        if (statistics == null) {
+            throw new UserNotFoundException("statistics with ID " + id + " not found.");
+        }
+
+        return statistics;
+    }
+
 }
 

@@ -340,6 +340,8 @@ public class UserService implements IUserService {
         if (fountainDto == null)
             throw new ParamException("Fountain does not exist.");
 
+        if (user.getFavourites().contains(fountainDto.getId()))
+            return true;
         return user.getFavourites().contains(idFountain);
     }
 }

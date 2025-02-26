@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping("/api/devices")
 public class DeviceController {
 
-
     private final DeviceService deviceService;
 
     @Autowired
@@ -24,44 +23,46 @@ public class DeviceController {
 
     @GetMapping
     public ResponseEntity<List<DeviceDto>> getAllDevices() {
-        try{
+        try {
             List<DeviceDto> devices = deviceService.getAllDevices();
             return devices.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(devices, HttpStatus.OK);
-        }catch (RetrofitException e){
+        } catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DeviceDto> getDeviceById(@PathVariable("id") Integer id) {
-        if (id <= 0){
+        if (id <= 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }try{
+        }
+        try {
             DeviceDto device = deviceService.getDeviceById(id);
             return new ResponseEntity<>(device, HttpStatus.OK);
-        }catch (RetrofitException e){
+        } catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping
     public ResponseEntity<DeviceDto> createDevice(@RequestBody DeviceDto device) {
-        try{
+        try {
             DeviceDto deviceCreated = deviceService.createDevice(device);
             return new ResponseEntity<>(deviceCreated, HttpStatus.CREATED);
-        }catch (RetrofitException e){
+        } catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<DeviceDto> updateDevice(@RequestBody DeviceDto device, @PathVariable int id) {
-        if(id <= 0){
+        if (id <= 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }try{
+        }
+        try {
             DeviceDto updatedDevice = deviceService.updateDevice(id, device);
             return new ResponseEntity<>(updatedDevice, HttpStatus.OK);
-        }catch (RetrofitException e){
+        } catch (RetrofitException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

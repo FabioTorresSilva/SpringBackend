@@ -46,6 +46,7 @@ public class AuthController {
         User us = userRepository.findUserByEmail(user.getEmail());
         return new SigninDto(us.getId(), us.getRole(),jwtUtils.generateToken(userDetails.getUsername()));
     }
+
     @PostMapping("/signup")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
